@@ -2,15 +2,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {useEffect,useState} from "react";
 
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 
 
-import {Navigation } from "swiper";
+import {Navigation,EffectCoverflow,Autoplay} from "swiper";
 import Link from "next/link";
+import Trailer from "./trailer";
 export default function Carousel() {
 
     const [token, setToken] = useState('');
+
 
     useEffect(() => {
         if (!token) {
@@ -37,13 +39,16 @@ export default function Carousel() {
         <>
             <Swiper
                 slidesPerView={1}
-                spaceBetween={10}
-                loop={true}
-                pagination={{
-                    clickable: false
+                spaceBetween={0}
+                effect='coverflow'
+                speed={1000}
+                autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: true,
                 }}
-                navigation={false}
-                modules={[Navigation]}
+                loop={true}
+                navigation={{ nextEl: "#swiper-forward", prevEl: "#swiper-back" }}
+                modules={[Navigation,EffectCoverflow,Autoplay]}
                 className="mySwiper w-full h-full top-50"
             >
                 {
@@ -65,18 +70,25 @@ export default function Carousel() {
                                         <span className="inline-block px-5 pt-2 text-white text-lg font-Signika w-full">
                                             {movie?.overview}
                                         </span>
-                                            <Link href={link}>
-                                                <a className="cursor-pointer text-white mx-5 px-4 mt-10 py-1 flex items-center space-x-3 rounded-3xl bg-red-600 w-60">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                    <span className=" text-white text-lg">Watch Trailer</span>
-                                                </a>
-                                            </Link>
+                                        <Trailer movieId={movie?.id} movieMedia={movie?.media_type}/>
                                     </div>
                                     <div className="z-20 absolute top-32 right-56 ">
-                                        <img className="poster" src={posterImg}></img>
+
+                                        <Link href={link}>
+                                            <a>
+                                            <img className="poster" src={posterImg}></img>
+                                            </a>
+                                        </Link>
+                                    </div>
+                                    <div id="swiper-forward" className="cursor-pointer text-baseColor absolute right-10 top-1/2 z-20 w-20 h-20 inline-block duration-500 boxRight">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div id="swiper-back" className="rotate-180 cursor-pointer text-baseColor  absolute left-10 top-1/2 z-40 w-20 h-20 inline-block duration-500 boxLeft">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 relative top-10" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
                                     </div>
                                 </SwiperSlide>
                             )

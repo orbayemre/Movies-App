@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors:{
+        baseColor:'#F32424'
+      },
       fontFamily:{
         Signika: "'Signika', sans-serif",
         Teko: "'Teko', sans-serif",
