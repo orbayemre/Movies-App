@@ -25,7 +25,6 @@ export default function Trailer(props){
                 await fetch("https://api.themoviedb.org/3/tv/"+props.movieId+"/videos?api_key="+key+"&language=en-US");
             const data = await response.json();
             const result = data.results[data.results.length-1];
-            console.log(Object.values(result)[3]);
             setToken(result);
         }
         catch (err){
@@ -58,11 +57,11 @@ export default function Trailer(props){
                 <span className="text-lg">Watch Trailer</span>
             </div>
             <div ref={iframeRef} className="hidden duration-200 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadowType1 rounded-lg ">
+
                 <iframe id="youtube_player" className="yt_player_iframe rounded-lg" width="737" height="415"
-                        src={"https://www.youtube-nocookie.com/embed/"+trailerKey+"?enablejsapi=1&version=3&playerapiid=ytplayer"}
+                        src={"https://www.youtube-nocookie.com/embed/"+trailerKey+"?enablejsapi=1&origin=http://localhost:3000"}
                         allowscriptaccess="always"
                         allowFullScreen>
-
                 </iframe>
 
                 <span onClick={()=>hideIframe()} className="absolute -right-0 -top-0 text-lg h-6 w-6 p-1 box-content bg-black/30 text-white rounded-full cursor-pointer">

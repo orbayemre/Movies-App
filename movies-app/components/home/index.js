@@ -1,6 +1,6 @@
 import Header from "./header";
 import Head from "next/head";
-
+import Content from "./content";
 export default function HomeComp({headerMov}){
     const Ids= [];
     headerMov.map((movie)=>{
@@ -17,6 +17,7 @@ export default function HomeComp({headerMov}){
                 <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Distressed&family=Signika:wght@400;500&family=Teko&display=swap" rel="stylesheet"/>
             </Head>
             <Header headerMov={headerMov} ids={Ids}/>
+            <Content/>
         </div>
     )
 }
