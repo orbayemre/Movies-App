@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.disableSelect{
+    user-select: none;
+}
 
 .poster{
     width: 256px;
@@ -12,6 +14,22 @@
 .shadowType1{
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
+.shadowType2{
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.filter-switch label {
+    cursor: pointer;
+}
+.filter-switch-item input:checked + label {
+    color: inherit;
+}
+.filter-switch-item input:not(:checked) + label {
+    --bg-opacity: 0;
+    box-shadow: none;
+}
+
+
 @keyframes boxright {
     from {
         right:0px;

@@ -1,9 +1,8 @@
 import HomeComp from "../components/home";
-
 export default function Home({headerMov}) {
 
   return (
-      <div>
+      <div className="bg-background">
         <HomeComp headerMov={headerMov}/>
       </div>
   )

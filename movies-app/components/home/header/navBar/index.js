@@ -1,11 +1,26 @@
 import Link from 'next/link';
 import { useRouter } from "next/router";
+import {useEffect} from "react";
+
 
 export default function NavBar(){
     const router = useRouter();
+    useEffect(()=>{
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("navbar").style.top = "0";
+            } else {
+                document.getElementById("navbar").style.top = "-50px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+
+    },[])
 
     return(
-        <div className="fixed w-full h-12 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
+        <div id="navbar" className="fixed duration-700 w-full h-12 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
             <span className="text-4xl ml-10 text-baseColor font-Teko cursor-pointer">
                 <Link href="/">
                     <a>Movies App</a>

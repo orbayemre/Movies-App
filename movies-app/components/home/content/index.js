@@ -1,9 +1,17 @@
 import {useState,useEffect} from "react";
+import {useSelector} from "react-redux";
+import ControllerBar from "./contollerBar";
+import Results from "./contollerBar/results";
 
 export default function Content(){
 
+    const {query,genre} = useSelector(state => state.homeSearch);
     const [data, setData] = useState([]);
-    const [search,setSearch] = useState("");
+    const [search,setSearch] = useState();
+
+    useEffect(()=>{
+        setSearch(query);
+    },[query])
 
     useEffect(()=>{
         if(search !== "")
@@ -16,7 +24,8 @@ export default function Content(){
     const getSearchData =async () => {
         try{
             const key = process.env.NEXT_PUBLIC_API_KEY;
-            const url = "https://api.themoviedb.org/3/search/multi?api_key="+key+"cb&language=en-US&query="+search.toLowerCase()+"&page=1&include_adult=false";
+            const query = search.toLowerCase();
+            const url = "https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=en-US&query="+query+"&page=1&include_adult=false";
             const response =  await fetch(url);
             const data = await response.json();
             setData(data.results);
@@ -59,22 +68,17 @@ export default function Content(){
             console.log(err);
         }
     };
-    const searchChange = (e)=>{
-        setSearch(e.target.value);
-    }
+
+
     const results = []
     for(var key in data){
         results.push(data[key]);
     }
 
-    console.log(results);
-    results.map((item)=>{
-        //console.log(item);
-    })
     return(
-        <div>
-
-            <input type="text" onChange={searchChange}/>
+        <div id="content" className="py-4">
+            <ControllerBar/>
+            <Results results ={results} />
         </div>
     )
 
