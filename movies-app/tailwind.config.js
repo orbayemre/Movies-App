@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        baseColor:'#F32424',
-        background:'#2C3639'
+        baseColor:'#FFC23C',
+        background:'#2C3639',
       },
       fontFamily:{
         Signika: "'Signika', sans-serif",

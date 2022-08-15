@@ -73,6 +73,7 @@ export default function Content(){
     const results = []
     for(var key in data){
         results.push(data[key]);
+        console.log(results)
     }
 
     return(
