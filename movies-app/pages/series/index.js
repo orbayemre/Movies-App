@@ -1,9 +1,8 @@
-export default function Series() {
+import SeriesComp from "../../components/series";
+export default function Movies() {
     return (
-        <>
-            <p>
-                Series
-            </p>
-        </>
+        <div className="bg-background">
+            <SeriesComp/>
+        </div>
     )
 }

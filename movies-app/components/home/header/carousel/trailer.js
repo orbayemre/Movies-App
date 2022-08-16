@@ -47,6 +47,13 @@ export default function Trailer(props){
     }
 
     const trailerKey = token.key;
+    /*
+                <iframe id="youtube_player" className="yt_player_iframe rounded-lg" width="737" height="415"
+                        src={"https://www.youtube-nocookie.com/embed/"+trailerKey+"?enablejsapi=1&origin=*"}
+                        allowscriptaccess="always"
+                        allowFullScreen>
+                </iframe>
+                */
     return(
         <>
             <div onClick={()=>showIframe()} className="cursor-pointer text-black mx-5 px-4 mt-10 py-1 flex items-center space-x-3 rounded-3xl bg-baseColor w-60 border border-baseColor duration-200 hover:text-baseColor hover:bg-baseColor/0" >
@@ -58,11 +65,6 @@ export default function Trailer(props){
             </div>
             <div ref={iframeRef} className="hidden duration-200 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadowType1 rounded-lg ">
 
-                <iframe id="youtube_player" className="yt_player_iframe rounded-lg" width="737" height="415"
-                        src={"https://www.youtube-nocookie.com/embed/"+trailerKey+"?enablejsapi=1&origin=*"}
-                        allowscriptaccess="always"
-                        allowFullScreen>
-                </iframe>
 
                 <span onClick={()=>hideIframe()} className="absolute -right-0 -top-0 text-lg h-6 w-6 p-1 box-content bg-black/30 text-white rounded-full cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

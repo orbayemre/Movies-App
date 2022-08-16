@@ -21,7 +21,7 @@ export default function NavBar(){
     },[])
 
     return(
-        <div ref={navbar} className="fixed duration-700 w-full h-12 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
+        <div ref={navbar} className="fixed duration-700 w-full h-10 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
             <span className="text-4xl ml-10 text-baseColor font-Teko cursor-pointer">
                 <Link href="/">
                     <a>Movies App</a>

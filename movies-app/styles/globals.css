@@ -50,7 +50,9 @@ body::-webkit-scrollbar-thumb {
 .h-rb{
     height: 75%;
 }
-
+.w-sb{
+    width: 95%;
+}
 .poster{
     width: 256px;
     height: 384px;
@@ -88,7 +90,9 @@ body::-webkit-scrollbar-thumb {
 #resultBox:hover #middle {
     opacity: 1;
 }
-
+#resultBox:hover #title {
+    opacity: 1;
+}
 
 
 
