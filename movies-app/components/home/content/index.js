@@ -72,11 +72,11 @@ export default function Content(){
         <div id="content" className="py-4 flex flex-col space-y-10 mt-10 pb-10">
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Upcoming Movies</h1>
-                <Results results ={upcomingMoviesResults} time={2000} delay={1000} />
+                <Results results ={upcomingMoviesResults} time={1700} delay={1000} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Movies</h1>
-                <Results results ={popularMoviesResults} time={2000} delay={1000} />
+                <Results results ={popularMoviesResults} time={2000} delay={1500} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Series</h1>

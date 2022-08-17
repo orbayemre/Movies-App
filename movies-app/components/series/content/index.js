@@ -1,48 +1,46 @@
-import {useState,useEffect} from "react";
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Results from "../../shared/results";
 
-export default function Content(){
+const Content = ({ data }) => {
+    const [series, setSeries] = useState(data);
+    const [hasMore, setHasMore] = useState(true);
+    const [page,setPage] = useState(2);
 
-    const [data, setData] = useState([]);
-
-    useEffect(()=>{
-        getData();
-    },[])
     const getData = async () => {
-        try{
-
-            const key = process.env.NEXT_PUBLIC_API_KEY;
-
-            const responsePopMovieUrl = "https://api.themoviedb.org/3/tv/popular?api_key="+key+"&language=en-US&page=1";
-            const responsePopMovie =  await fetch(responsePopMovieUrl);
-            const dataPopMovie = await responsePopMovie.json();
-            let popMovie = dataPopMovie.results.slice(0,20);
+        setPage(page+1);
+        const key = process.env.NEXT_PUBLIC_API_KEY;
 
 
-            const responseRatedMovieUrl = "https://api.themoviedb.org/3/tv/top_rated?api_key="+key+"&language=en-US&page=1";
-            const responseRatedMovie =  await fetch(responseRatedMovieUrl);
-            const dataRatedMovie = await responseRatedMovie.json();
-            let ratedMovie = dataRatedMovie.results.slice(0,20);
-            const data = [...popMovie,...ratedMovie];
-            setData(data);
+        const responsePopTvUrl = "https://api.themoviedb.org/3/tv/popular?api_key="+key+"&language=en-US&page="+page;
+        const responsePopTv =  await fetch(responsePopTvUrl);
+        const dataPopTv = await responsePopTv.json();
+        let popTv = dataPopTv.results;
 
-        }
-        catch (err){
-            console.log(err);
-        }
+        const responseRatedTvUrl = "https://api.themoviedb.org/3/tv/top_rated?api_key="+key+"&language=en-US&page="+page;
+        const responseRatedTv =  await fetch(responseRatedTvUrl);
+        const dataRatedTv = await responseRatedTv.json();
+        let ratedTv = dataRatedTv.results;
+
+        setSeries((post) => [...post, ...popTv,...ratedTv]);
     };
 
-
     const results = []
-    for(var key in data){
-        results.push(data[key]);
+    for(var key in series){
+        results.push(series[key]);
     }
 
-    return(
-        <div id="content" className="py-4">
-            <Results results ={results} />
-        </div>
-    )
+    return (
+        <>
+            <InfiniteScroll
+                dataLength={results.length}
+                next={getData}
+                hasMore={hasMore}
+            >
+                <Results results={results}></Results>
+            </InfiniteScroll>
+        </>
+    );
+};
 
-
-}
+export default Content;
