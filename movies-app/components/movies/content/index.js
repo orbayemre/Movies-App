@@ -8,7 +8,6 @@ const Content = ({ data }) => {
     const [page,setPage] = useState(2);
 
     const getData = async () => {
-        setPage(page+1);
         const key = process.env.NEXT_PUBLIC_API_KEY;
         const responsePopMovieUrl = "https://api.themoviedb.org/3/movie/popular?api_key="+key+"&language=en-US&page="+page;
         const responsePopMovie =  await fetch(responsePopMovieUrl);
@@ -18,7 +17,9 @@ const Content = ({ data }) => {
         const responseRatedMovie =  await fetch(responseRatedMovieUrl);
         const dataRatedMovie = await responseRatedMovie.json();
         let ratedMovie = dataRatedMovie.results.slice(0,20);
-        setMovies((post) => [...post, ...popMovie,...ratedMovie]);
+
+        setPage(page+1);
+        setMovies((prev) => [...prev, ...popMovie,...ratedMovie]);
     };
 
     const results = []

@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-export const homeSearchFilter = createSlice({
+export const searchFilter = createSlice({
     name:'searchFilter',
     initialState:{
         query:"",
@@ -14,6 +14,6 @@ export const homeSearchFilter = createSlice({
     },
 })
 
-export const {setQuery,setGenre} = homeSearchFilter.actions;
+export const {setQuery,setGenre} = searchFilter.actions;
 
-export default homeSearchFilter.reducer;
+export default searchFilter.reducer;

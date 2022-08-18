@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import homeSearchFilterReducer from "./homeSearchFilter";
+import homeSearchFilterReducer from "./searchFilter";
 export default configureStore({
     reducer: {
-        homeSearch : homeSearchFilterReducer,
+        search : homeSearchFilterReducer,
     },
 })

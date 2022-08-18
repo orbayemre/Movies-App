@@ -8,9 +8,7 @@ const Content = ({ data }) => {
     const [page,setPage] = useState(2);
 
     const getData = async () => {
-        setPage(page+1);
         const key = process.env.NEXT_PUBLIC_API_KEY;
-
 
         const responsePopTvUrl = "https://api.themoviedb.org/3/tv/popular?api_key="+key+"&language=en-US&page="+page;
         const responsePopTv =  await fetch(responsePopTvUrl);
@@ -22,7 +20,8 @@ const Content = ({ data }) => {
         const dataRatedTv = await responseRatedTv.json();
         let ratedTv = dataRatedTv.results;
 
-        setSeries((post) => [...post, ...popTv,...ratedTv]);
+        setPage(page+1);
+        setSeries((prev) => [...prev, ...popTv,...ratedTv]);
     };
 
     const results = []

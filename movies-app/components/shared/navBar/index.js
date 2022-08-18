@@ -40,6 +40,10 @@ export default function NavBar(){
                     <a className={router.pathname === "/series" ? "text-xl text-baseColor hover:text-white duration-100"
                         : "text-xl hover:text-baseColor duration-100"}>Series</a>
                 </Link>
+                <Link href="/search">
+                    <a className={router.pathname === "/series" ? "text-xl text-baseColor hover:text-white duration-100"
+                        : "text-xl hover:text-baseColor duration-100"}>Search</a>
+                </Link>
                 <div className='pl-10 space-x-3 text-sm'>
                     <span className='cursor-pointer hover:text-baseColor duration-100 '>Sign In </span>
                     <span className='bg-baseColor  hover:bg-baseColor duration-100 cursor-pointer rounded-xl text-white px-3 py-1'>Sign Up</span>

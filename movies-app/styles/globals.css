@@ -8,6 +8,7 @@ html,body {
     overflow-x: hidden;
 }
 body {
+    background-color: #2C3639;
     scrollbar-width: thin;
     scrollbar-color: #404040 #ffffff;
 }
@@ -93,7 +94,6 @@ body::-webkit-scrollbar-thumb {
 #resultBox:hover #title {
     opacity: 1;
 }
-
 
 
 .filter-switch label {
