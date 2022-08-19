@@ -6,6 +6,7 @@
 }
 html,body {
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 body {
     background-color: #2C3639;
@@ -26,6 +27,11 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
     background-color: #FFC23C;
     border-radius: 30px;
+}
+
+
+#searchInput:focus  #searchBox{
+    border: 2px solid #FFC23C;
 }
 
 

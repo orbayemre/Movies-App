@@ -1,14 +1,13 @@
 import Head from "next/head"
 import Content from "./content";
 import NavBar from "../shared/navBar";
-import Link from "next/link";
-
+import GoToTop from "../shared/goToTop";
 
 import {Provider} from "react-redux";
 import store from "../../stores";
 
 
-export default function SearchComp({data}){
+export default function SearchComp(){
     return(
         <div>
             <Head>
@@ -18,15 +17,11 @@ export default function SearchComp({data}){
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
                 <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Distressed&family=Signika:wght@400;500&family=Teko&display=swap" rel="stylesheet"/>
             </Head>
-            <Link href={"/search"}>
-                <a className="fixed flex justify-center items-center bottom-3 right-10 w-20 h-20 z-50 inline-block bg-background shadowType1 text-baseColor rounded-full scroll-smooth">
-                    Go to Top
-                </a>
-            </Link>
+            <GoToTop/>
             <Provider store={store}>
-                <Content data={data}/>
+                <Content/>
+                <NavBar/>
             </Provider>
-            <NavBar/>
         </div>
     )
 }

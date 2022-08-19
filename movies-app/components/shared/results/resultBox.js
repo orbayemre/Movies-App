@@ -26,7 +26,7 @@ export default function ResultBox({result}){
                         <img src={posterLink} id="resultImg" className="w-full h-full rounded-lg absolute z-0"/>
                         <div id="middle" className="z-30 text-baseColor w-full h-rb px-2 -pt-5 pb-8 text-sm overflow-auto font-Signika">
                     <span>
-                        {result?.overview ? result?.overview :""}
+                        {result?.overview ? (result?.overview==="" ? "0.0" :result?.overview) :"0.0"}
                     </span>
                         </div>
                     </div>

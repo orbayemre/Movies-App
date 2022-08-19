@@ -6,13 +6,32 @@ import {useSelector} from "react-redux";
 import {setQuery} from "../../stores/searchFilter";
 import toast, { Toaster } from 'react-hot-toast';
 
-const Content = ({data}) => {
-
-    const [searchResults, setSearchResults] = useState(data);
+const Content = () => {
+    const [searchResults, setSearchResults] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [page,setPage] = useState(1);
+    const [loading,setLoading] = useState(true);
     const dispatch = useDispatch();
     const {query,genre} = useSelector(state => state.search);
+
+    useEffect(()=>{
+        if(!query) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const queryURl = urlParams.get('query')
+
+            if(queryURl) {
+                dispatch(setQuery(queryURl));
+            }
+        }
+    },[]);
+    useEffect(()=>{
+        setSearchResults([]);
+        setLoading(true);
+        getData()
+    },[query])
+
+
     const getData = async () => {
 
         try{
@@ -27,6 +46,7 @@ const Content = ({data}) => {
 
             setPage(page+1);
             if(search) setSearchResults((prev) => [...prev, ...search]);
+            setLoading(false);
         }
         catch (e){
             console.log(e);
@@ -43,6 +63,7 @@ const Content = ({data}) => {
     }
     const searchClick = ()=>{
             setSearchResults([]);
+            setLoading(true);
             getData();
             if(query==="") toast.error("Please type a search value", {
                 style: {
@@ -56,20 +77,17 @@ const Content = ({data}) => {
     for(var key in searchResults){
         results.push(searchResults[key]);
     }
-    console.log(results);
-/*
-*/
     return (
         <div>
-            <div id="search" className="bg-baseColor text-background mx-8 rounded-lg w-80 flex items-center relative top-14 left-20 mb-20 ">
-                <input type="text" onChange={searchChange} onKeyDown={keyDown13}
+            <div id="search" className="disableSelect bg-baseColor text-background mx-8 rounded-lg w-80 flex items-center relative top-14 left-20 mb-20 ">
+                <input type="text" onChange={searchChange} onKeyDown={keyDown13} value={query}
                        className="outline-0 bg-baseColor px-2 w-72 py-1 font-Signika" />
                 <svg onClick={searchClick} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
 
-            {results.length !== 0 &&
+            {results.length !== 0  && !loading  &&
                 <InfiniteScroll
                     dataLength={results.length}
                     next={getData}
@@ -78,10 +96,17 @@ const Content = ({data}) => {
                     <Results results={results}></Results>
                 </InfiniteScroll>
             }
-            {results.length === 0 &&
+            {results.length === 0 && !loading &&
                 <div className="text-baseColor absolute top-18 left-28">
                     No results found.
                 </div>
+            }
+            {loading && <div>
+                <div className="text-baseColor absolute top-18 left-28">
+                    Loading
+                </div>
+
+            </div>
             }
             <Toaster
                 position="top-center"
