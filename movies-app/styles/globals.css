@@ -60,6 +60,10 @@ body::-webkit-scrollbar-thumb {
 .w-sb{
     width: 95%;
 }
+w-thirty{
+    width: 30%;
+
+}
 .poster{
     width: 256px;
     height: 384px;

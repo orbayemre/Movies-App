@@ -1,29 +1,17 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import DetailsComp from "../../../components/details";
+import {useState} from "react";
 
-export default function Post({ post }) {
-    const router = useRouter()
-    if (router.isFallback) {
-        return <div>Loading...</div>
+export default function MoviesDetails() {
+    const router = useRouter();
+    const [id,setId] = useState(router.query.id);
+    if (typeof window !== 'undefined'){
+        id ? localStorage.setItem("detailId",id) : setId(localStorage.getItem("detailId"));
     }
     return (
-        <div>
-            moive - {post}
-        </div>
+        <>
+            <DetailsComp detailId ={id} media={"movie"}/>
+        </>
     )
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [{ params: { id: '1' } }],
-        fallback: true,
-    }
-}
-
-export async function getStaticProps({ params }) {
-    const post = params.id;
-
-    return {
-        props: { post },
-        revalidate: 1,
-    }
-}

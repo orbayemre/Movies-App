@@ -6,7 +6,7 @@ import "swiper/css/effect-coverflow";
 import {Autoplay, Navigation} from "swiper";
 import Link from "next/link";
 
-export default  function Results({results,time,delay}){
+export default  function Results({results,time,delay,media}){
     return(
             <Swiper
                 slidesPerView={6}
@@ -25,7 +25,7 @@ export default  function Results({results,time,delay}){
                     results.map(result => {
 
                             const posterLink = "https://image.tmdb.org/t/p/original"+ result?.poster_path.toString();
-                            const link = result?.media_type === "tv" ? "/series/details/"+result?.id :"/movies/details/"+result?.id;
+                            let link = media === "movie" ? "/movies/details/"+result?.id :"/series/details/"+result?.id;
                             var date;
                             date = result?.first_air_date || result?.release_date;
                             return (

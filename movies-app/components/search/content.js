@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Results from "../shared/results";
-import {useDispatch} from "react-redux";
-import {useSelector} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import {setQuery} from "../../stores/searchFilter";
 import toast, { Toaster } from 'react-hot-toast';
+import {useRef} from "react";
+import Link from "next/link";
 
 const Content = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -13,6 +14,7 @@ const Content = () => {
     const [loading,setLoading] = useState(true);
     const dispatch = useDispatch();
     const {query,genre} = useSelector(state => state.search);
+    const loadingRef = useRef(null);
 
     useEffect(()=>{
         if(!query) {
@@ -31,6 +33,9 @@ const Content = () => {
         getData()
     },[query])
 
+    useEffect(() => {
+        import("@lottiefiles/lottie-player");
+    });
 
     const getData = async () => {
 
@@ -97,13 +102,22 @@ const Content = () => {
                 </InfiniteScroll>
             }
             {results.length === 0 && !loading &&
-                <div className="text-baseColor absolute top-18 left-28">
+                <div className="text-baseColor absolute top-18 left-28 text-2xl font-bold font-Signika">
                     No results found.
                 </div>
             }
             {loading && <div>
-                <div className="text-baseColor absolute top-18 left-28">
-                    Loading
+                <div className="text-baseColor flex flex-col  absolute top-18 left-28">
+                    <lottie-player
+                        id="firstLottie"
+                        ref={loadingRef}
+                        autoplay
+                        loop
+                        mode="normal"
+                        src="https://assets1.lottiefiles.com/packages/lf20_j1adxtyb.json"
+                        style={{ width: "200px", height: "200px" }}
+                    ></lottie-player>
+                   <span className="text-3xl font-bold font-Signika">Loading...</span>
                 </div>
 
             </div>

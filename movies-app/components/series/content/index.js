@@ -36,7 +36,7 @@ const Content = ({ data }) => {
                 next={getData}
                 hasMore={hasMore}
             >
-                <Results results={results}></Results>
+                <Results results={results} media={"tv"}></Results>
             </InfiniteScroll>
         </>
     );
