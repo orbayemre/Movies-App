@@ -1,27 +1,50 @@
-
-export default function DetailsHeader({result,cast,review,similar}){
+import Poster from "./poster";
+import HeaderContent from "./content";
+export default function DetailsHeader({result,cast,review,similar,trailer}){
 
     var posterImg = "https://image.tmdb.org/t/p/original"+ result?.poster_path;
+    var trailerUrl,trailerKey;
+
+    trailer?.results.forEach((item)=>{
+        if(item?.type === "Trailer"){
+            if(item?.site === "YouTube") {
+                trailerUrl = "https://www.youtube.com/watch?v="+item?.key;
+                trailerKey = item?.key;
+
+            }
+            else trailerUrl = "";
+        }
+        else trailerUrl = "";
+
+    })
+
     console.log(cast);
     console.log(review);
     console.log(similar);
     console.log(result);
     return(
-        <div className="w-screen h-screen">
-            <img src={posterImg}  className="w-thirty h-rb z-0 absolute top-28 left-28 rounded-xl "/>
-            <div className=" w-full h-1/2 inline-block z-20 absolute bottom-0 left-0 rounded-xl bg-gradient-to-t from-background to-transparent "/>
-        </div>
+        <>
+            <Poster
+                posterUrl={posterImg}
+                tagline={result?.tagline}
+                watchNowLink={result?.homepage}
+                watchTrailerLink = {trailerUrl}
+            />
+            <HeaderContent result={result}
+                           watchNowLink={result?.homepage}
+                           trailerKey = {trailerKey}
+            />
+        </>
     )
 }
 /*
 genres
-homepage : yayıncıdaki link
 first air date /release date
-overview
-? spoken lang
-? tagline
 vote average
-popularity
+tagline
+
+homepage : yayıncıdaki link
+overview
 
 //only movie
     time

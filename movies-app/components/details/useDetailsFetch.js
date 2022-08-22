@@ -6,6 +6,7 @@ export default function useDetailsFetch(id,media){
     const [cast,setCast] = useState();
     const [review,setReview] = useState();
     const [similar,setSimilar] = useState();
+    const [trailer,setTrailer] = useState();
 
     useEffect(()=>{
         if(media === "movie") getMovieData();
@@ -36,6 +37,11 @@ export default function useDetailsFetch(id,media){
                 const responseSimilar=  await fetch(similarUrl);
                 const dataSimilar = await responseSimilar.json();
                 setSimilar(dataSimilar);
+
+                const trailerUrl =  "https://api.themoviedb.org/3/movie/"+id+"/videos?api_key="+key+"&language=en-US"
+                const responseTrailer=  await fetch(trailerUrl);
+                const dataTrailer = await responseTrailer.json();
+                setTrailer(dataTrailer);
             }
 
         } catch (err) {
@@ -67,6 +73,11 @@ export default function useDetailsFetch(id,media){
                 const responseSimilar=  await fetch(similarUrl);
                 const dataSimilar = await responseSimilar.json();
                 setSimilar(dataSimilar);
+
+                const trailerUrl =  "https://api.themoviedb.org/3/tv/"+id+"/videos?api_key="+key+"&language=en-US"
+                const responseTrailer=  await fetch(trailerUrl);
+                const dataTrailer = await responseTrailer.json();
+                setTrailer(dataTrailer);
             }
 
         } catch (err) {
@@ -78,6 +89,7 @@ export default function useDetailsFetch(id,media){
         data,
         cast,
         review,
-        similar
+        similar,
+        trailer
     };
 }
