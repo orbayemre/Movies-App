@@ -63,8 +63,8 @@ export default function HeaderContent({result,watchNowLink,trailerKey}){
                     </div>
                 </div>
             </div>
-            <div className="w-full relative top-10 text-lg flex justify-between font-Signika font-bold text-baseColor ">
-                <span className="w-1/2">{result?.overview}</span>
+            <div className="w-full h-3/5 relative top-10 text-lg flex justify-between font-Signika font-bold text-baseColor ">
+                <span id="detailOverview" className="w-1/2 h-full overflow-auto pr-3">{result?.overview}</span>
                 <div className="disableSelect rounded-lg">
                     <iframe id="youtube_player" className="yt_player_iframe rounded-lg relative left-10" width="500" height="300"
                             src={"https://www.youtube-nocookie.com/embed/"+trailerKey+"?enablejsapi=1&origin=*&showinfo=0"}

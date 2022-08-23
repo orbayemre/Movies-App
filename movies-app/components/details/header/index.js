@@ -1,5 +1,7 @@
 import Poster from "./poster";
-import HeaderContent from "./content";
+import HeaderContent from "./headerContent";
+import Cast from "./cast";
+import Review from "./review";
 export default function DetailsHeader({result,cast,review,similar,trailer}){
 
     var posterImg = "https://image.tmdb.org/t/p/original"+ result?.poster_path;
@@ -34,6 +36,8 @@ export default function DetailsHeader({result,cast,review,similar,trailer}){
                            watchNowLink={result?.homepage}
                            trailerKey = {trailerKey}
             />
+            <Cast castData={cast}/>
+            <Review reviewData={review}/>
         </>
     )
 }

@@ -35,27 +35,52 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-#middle {
+#middle,#detailOverview {
     scrollbar-width: thin;
     scrollbar-color: #404040 #ffffff;
 }
 
-#middle::-webkit-scrollbar {
+#middle::-webkit-scrollbar,#detailOverview::-webkit-scrollbar {
     width: 4px;
     padding-left: 2px;
     transition-duration: 0.2s;
 }
 
-#middle::-webkit-scrollbar-track {
+#middle::-webkit-scrollbar-track,#detailOverview::-webkit-scrollbar-track {
     background: #2C3639;
 }
 
-#middle::-webkit-scrollbar-thumb {
+#middle::-webkit-scrollbar-thumb ,#detailOverview::-webkit-scrollbar-thumb {
     background-color: #FFC23C;
     border-radius: 30px;
 }
+
+#reviewScroll {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 #ffffff;
+}
+
+#reviewScroll::-webkit-scrollbar {
+    width: 2px;
+    padding-left: 2px;
+    transition-duration: 0.2s;
+}
+
+#reviewScroll::-webkit-scrollbar-track {
+    background: #2C3639;
+}
+
+#reviewScroll::-webkit-scrollbar-thumb {
+    background-color: #FFC23C;
+    border-radius: 30px;
+}
+
+
 .h-rb{
     height: 75%;
+}
+.h-review{
+    height: 560px;
 }
 .w-sb{
     width: 95%;
@@ -63,6 +88,9 @@ body::-webkit-scrollbar-thumb {
 .w-twentyfive{
     width: 25%;
 
+}
+.text-small{
+    font-size: 11px;
 }
 .fill{
     fill: #FFC23C;
@@ -78,6 +106,9 @@ body::-webkit-scrollbar-thumb {
 }
 .shadowType2{
     box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+.shadowType3{
+    box-shadow: rgba(0, 0, 0, 0.95) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 #resultImg {
@@ -107,7 +138,6 @@ body::-webkit-scrollbar-thumb {
 #resultBox:hover #title {
     opacity: 1;
 }
-
 
 #posterImg {
     opacity: 1;

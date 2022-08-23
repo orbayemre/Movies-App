@@ -1,9 +1,8 @@
 
 export default function Poster({posterUrl,tagline,watchNowLink,watchTrailerLink}){
-    console.log(watchNowLink);
     return(
-        <>
-            <div id="detailPoster" className="w-twentyfive h-rb z-0 absolute top-28 left-20 rounded-xl shadowType2 ">
+        <div className="relative w-twentyfive h-rb">
+            <div id="detailPoster" className="w-full h-full relative z-0 top-28 left-20 rounded-xl shadowType2 ">
                 <img src={posterUrl} id="posterImg" className="w-full h-full z-0 rounded-xl"/>
                 <div id="middlePoster" className="z-30 text-baseColor opacity-0 w-full h-rb pl-5 text-xl overflow-auto font-Signika">
                     <span>{tagline}</span>
@@ -23,6 +22,6 @@ export default function Poster({posterUrl,tagline,watchNowLink,watchTrailerLink}
                 <div className=" w-full h-1/3 inline-block z-20 absolute bottom-0 left-0 rounded-xl bg-gradient-to-t from-background/60 to-transparent "/>
 
             </div>
-        </>
+        </div>
     )
 }

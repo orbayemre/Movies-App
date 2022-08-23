@@ -25,7 +25,7 @@ export default function useDetailsFetch(id,media){
                 const castUrl =  "https://api.themoviedb.org/3/movie/"+id+"/credits?api_key="+key+"&language=en-US"
                 const responseCast=  await fetch(castUrl);
                 const dataCast = await responseCast.json();
-                setCast(dataCast);
+                setCast(dataCast.cast);
 
 
                 const reviewUrl =  "https://api.themoviedb.org/3/moive/"+id+"/reviews?api_key="+key+"&language=en-US"
@@ -61,7 +61,7 @@ export default function useDetailsFetch(id,media){
                 const castUrl =  "https://api.themoviedb.org/3/tv/"+id+"/credits?api_key="+key+"&language=en-US"
                 const responseCast=  await fetch(castUrl);
                 const dataCast = await responseCast.json();
-                setCast(dataCast);
+                setCast(dataCast.cast);
 
 
                 const reviewUrl =  "https://api.themoviedb.org/3/tv/"+id+"/reviews?api_key="+key+"&language=en-US"
