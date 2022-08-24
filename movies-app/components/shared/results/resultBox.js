@@ -1,17 +1,22 @@
 import Link from "next/link";
+import {useRouter} from "next/router";
 export default function ResultBox({result,media}){
+    const router = useRouter();
     var posterLink,link;
     if(result?.poster_path) posterLink = "https://image.tmdb.org/t/p/original"+ result?.poster_path;
     else posterLink =null;
-    if(media) link = media === "movie" ? "/movies/details/"+result?.id :"/series/details/"+result?.id ;
-    else link = result?.media_type === "movie" ? "/movies/details/"+result?.id :"/series/details/"+result?.id ;
+    if(media) link = media === "movie" ? "/movies/details?id="+result?.id :"/series/details?id="+result?.id ;
+    else link = result?.media_type === "movie" ? "/movies/details?id="+result?.id :"/series/details?id="+result?.id ;
 
     var date = result?.first_air_date || result?.release_date;
+
+    const changeDetailId = ()=>{
+        if (typeof window !== 'undefined') localStorage.setItem("detailId",router.query.id)
+    }
     if(posterLink){
         return(
-            <Link href={link}>
-                <a>
-                    <div id="resultBox" className="w-56 h-80 rounded mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer ">
+                <a href={link} >
+                    <div onClick={()=>changeDetailId} id="resultBox" className="w-56 h-80 rounded mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer ">
                         <div className="flex flex-col -space-y-1 text-baseColor  font-Signika z-10 w-full pb-0 pl-3 rounded-b-lg bg-black/60 bottom-0 absolute  text-white">
                             <span className="font-bold text-baseColor">{result?.title} {result?.name}</span>
                             <span className="text-sm text-baseColor/70" >{date?.substring(0,4)}</span>
@@ -33,7 +38,6 @@ export default function ResultBox({result,media}){
                     </div>
                 </a>
 
-            </Link>
         )
     }
     else return null;

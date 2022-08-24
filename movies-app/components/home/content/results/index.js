@@ -25,7 +25,7 @@ export default  function Results({results,time,delay,media}){
                     results.map(result => {
 
                             const posterLink = "https://image.tmdb.org/t/p/original"+ result?.poster_path.toString();
-                            let link = media === "movie" ? "/movies/details/"+result?.id :"/series/details/"+result?.id;
+                            let link = media === "movie" ? "/movies/details?id="+result?.id :"/series/details?id="+result?.id;
                             var date;
                             date = result?.first_air_date || result?.release_date;
                             return (

@@ -5,10 +5,10 @@ export default function HeaderContent({result,watchNowLink,trailerKey}){
     const [bookmark,setBookmark] = useState(true);
     const bookmarkRef = useRef();
     var date = result?.first_air_date || result?.release_date;
-    var time;var streamerLogo
+    var time="";var streamerLogo;
     if(result?.networks)  streamerLogo="https://image.tmdb.org/t/p/original"+result?.networks[0]?.logo_path;
     if(result?.runtime){time = Math.floor(result?.runtime/60)+" hours "+result?.runtime%60+" minutes"}
-    else{ time = result?.number_of_seasons+" seasons"}
+    else if(result?.number_of_seasons){ time = result?.number_of_seasons+" seasons"}
 
 
 
@@ -48,14 +48,16 @@ export default function HeaderContent({result,watchNowLink,trailerKey}){
 
                 </div>
                 <div className="flex  items-center absolute right-64">
-                    <div className="w-20 h-20 disableSelect relative">
-                        <span className="h-20 w-20 z-10 text-background absolute text-sm font-bold font-Signika top-4 left-5">
-                            {result?.vote_average ? result?.vote_average.toFixed(1) : ""}
-                        </span>
-                        <svg className="h-14 w-14 relative left-0.5 -top-0.5  z-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#FFC23C">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                    </div>
+                    { result?.vote_average ?
+                        <div className="w-20 h-20 disableSelect relative">
+                            <span className="h-20 w-20 z-10 text-background absolute text-sm font-bold font-Signika top-4 left-5">
+                                {result?.vote_average.toFixed(1)}
+                            </span>
+                            <svg className="h-14 w-14 relative left-0.5 -top-0.5  z-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#FFC23C">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div> : ""
+                    }
                     <div className="w-20 h-20 disableSelect relative cursor-pointer">
                         <svg ref={bookmarkRef} onClick={()=> setBookmark(!bookmark)} className="w-14 h-14 " xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="#FFC23C">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />

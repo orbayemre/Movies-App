@@ -11,6 +11,7 @@ export default function NavBar(){
     const searchIcon = useRef(null);
     const movieRef = useRef(null);
     const dispatch = useDispatch();
+
     useEffect(()=>{
         if(typeof window !== "undefined"){
             var prevScrollpos = window.pageYOffset;

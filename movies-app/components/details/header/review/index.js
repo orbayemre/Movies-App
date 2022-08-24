@@ -10,21 +10,20 @@ export default function Review({reviewData}){
 
     if(reviewData?.results?.length>0){
         var results=[];
-        if(reviewData?.results.length>4){
-            for(let i=0;i<4;i++){
+        if(reviewData?.results.length>8){
+            for(let i=0;i<8;i++){
                 results.push(reviewData?.results[i]);
             }
         }
         else results = reviewData?.results;
-        console.log(results);
 
 
         return(
-            <div id="reviewScroll" className="w-1/4 h-review relative px-2 left-20 bottom-28 overflow-auto ">
-                <h1 className="text-3xl text-baseColor font-bold font-Signika">Review</h1>
+            <div  className="w-1/4 h-review relative px-2 left-20 bottom-72 ">
+                <h1 className="text-3xl text-baseColor pl-2 font-bold font-Signika">Reviews</h1>
+                <div id="reviewScroll" className="w-full px-2 h-full overflow-auto">
                 {
                     results?.map((item,index)=>{
-                        //"2021-06-23T15:58:26.376Z"
                         var date="";
                         var hours="";
                         if(item?.updated_at){date = item?.updated_at.slice(8,10)+"."+item?.updated_at.slice(5,7)+"."+ item?.updated_at.slice(0,4);}
@@ -48,11 +47,12 @@ export default function Review({reviewData}){
                     })
 
                 }
+                </div>
             </div>
     )}
     else{
         return (
-            <div className="w-1/4 h-auto relative p-2  left-20 bottom-28  rounded shadowType3 ">
+            <div className="w-1/4 h-auto relative p-2  left-20 bottom-72  rounded shadowType3 ">
                 <h1 className="text-3xl pl-4 text-baseColor font-bold font-Signika mb-2">Review</h1>
                <span className="font-bold font-Signika text-baseColor text-lg flex justify-center items-center flex-col ">
                    <lottie-player

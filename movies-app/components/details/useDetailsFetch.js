@@ -1,7 +1,6 @@
 import {useState,useEffect} from "react";
+
 export default function useDetailsFetch(id,media){
-
-
     const [data, setData] = useState({});
     const [cast,setCast] = useState();
     const [review,setReview] = useState();

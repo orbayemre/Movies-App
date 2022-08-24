@@ -32,7 +32,7 @@ export default function Carousel({headerMov,ids}) {
                     results.map(movie => {
                             let backgroundImg ="https://image.tmdb.org/t/p/original"+ movie?.backdrop_path.toString();
                             let posterImg ="https://image.tmdb.org/t/p/original"+ movie?.poster_path.toString();
-                            let link = movie?.media_type === "movie" ? "/movies/details/"+movie?.id :"/series/details/"+movie?.id;
+                            let link = movie?.media_type === "movie" ? "/movies/details?id="+movie?.id :"/series/details?id="+movie?.id;
                             return (
                                 <SwiperSlide key={movie.id}  >
                                     <div className="absolute w-full h-full z-10 backdrop-brightness-75" key={movie?.id}></div>

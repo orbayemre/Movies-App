@@ -2,10 +2,9 @@ import {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Results from "../shared/results";
 import {useDispatch,useSelector} from "react-redux";
-import {setQuery} from "../../stores/searchFilter";
+import {setQuery,setGenre} from "../../stores/searchFilter";
 import toast, { Toaster } from 'react-hot-toast';
 import {useRef} from "react";
-import Link from "next/link";
 
 const Content = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -30,8 +29,9 @@ const Content = () => {
     useEffect(()=>{
         setSearchResults([]);
         setLoading(true);
+        setPage(1)
         getData()
-    },[query])
+    },[query,genre])
 
     useEffect(() => {
         import("@lottiefiles/lottie-player");
@@ -41,16 +41,19 @@ const Content = () => {
 
         try{
             const key = process.env.NEXT_PUBLIC_API_KEY;
+            var responseSearchUrl
+            if(genre==="all"){responseSearchUrl = "https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=en-US&query="+query+"&page=1";}
+            else if(genre==="movies"){responseSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key="+key+"&language=en-US&query="+query+"&page=1";}
+            else if(genre==="series"){responseSearchUrl = "https://api.themoviedb.org/3/search/tv?api_key="+key+"&language=en-US&query="+query+"&page=1";}
 
-
-            const responseSearchUrl = "https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=en-US&query="+query+"&page="+page;
             const responseSearch =  await fetch(responseSearchUrl);
             const dataSearch = await responseSearch.json();
-            let search = dataSearch.results;
+            const search = dataSearch.results;
 
+            if(dataSearch.total_pages <= page) {setHasMore(false);}
+            else setHasMore(true);
 
-            setPage(page+1);
-            if(search) setSearchResults((prev) => [...prev, ...search]);
+            if(search) setSearchResults(search);
             setLoading(false);
         }
         catch (e){
@@ -59,6 +62,12 @@ const Content = () => {
     };
 
     const searchChange = (e)=>{
+        if(e.target.value==="") toast.error("Please type a search value", {
+            style: {
+                background: '#2C3639',
+                color:'#FFC23C',
+            },
+        })
         dispatch(setQuery(e.target.value));
     }
     const keyDown13 = (e) =>{
@@ -77,7 +86,29 @@ const Content = () => {
                 },
             })
     }
+    const getMoreData = async ()=>{
+        try{
+            setPage(page+1);
+            const key = process.env.NEXT_PUBLIC_API_KEY;
+            var responseSearchUrl
+            if(genre==="all"){ responseSearchUrl = "https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=en-US&query="+query+"&page="+page;}
+            else if(genre==="movies"){ responseSearchUrl = "https://api.themoviedb.org/3/search/movie?api_key="+key+"&language=en-US&query="+query+"&page="+page;}
+            else if(genre==="series"){ responseSearchUrl = "https://api.themoviedb.org/3/search/tv?api_key="+key+"&language=en-US&query="+query+"&page="+page;}
 
+            const responseSearch =  await fetch(responseSearchUrl);
+            const dataSearch = await responseSearch.json();
+            let search = dataSearch.results;
+
+
+            if(dataSearch.total_pages <= page) {setHasMore(false);}
+            else setHasMore(true);
+            if(search) setSearchResults((prev) => [...prev, ...search]);
+            setLoading(false);
+        }
+        catch (e){
+            console.log(e);
+        }
+    }
     const results = []
     for(var key in searchResults){
         results.push(searchResults[key]);
@@ -91,11 +122,43 @@ const Content = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
+            <div className="flex w-64 justify-around items-center disableSelect font-Signika font-bold text-baseColor absolute top-14 left-1/4 ml-20">
+                <div  onClick={()=>dispatch(setGenre("all"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
+                    {
+                        genre === "all" &&
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                        </svg>
+                    }
+                    <input type="radio" name="genre" id="all" className="hidden"/>
+                    <label htmlFor="all" className="cursor-pointer">All</label>
+                </div>
+                <div  onClick={()=>dispatch(setGenre("movies"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
+                    {
+                        genre === "movies" &&
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                        </svg>
+                    }
+                    <input type="radio" name="genre" id="movies" className="hidden"/>
+                    <label htmlFor="movies">Movies</label>
+                </div>
+                <div  onClick={()=>dispatch(setGenre("series"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
+                    {
+                        genre === "series" &&
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                        </svg>
+                    }
+                    <input type="radio" name="genre" id="series" className="hidden"/>
+                    <label className="ml-2" htmlFor="series">Series</label>
+                </div>
+            </div>
 
             {results.length !== 0  && !loading  &&
                 <InfiniteScroll
                     dataLength={results.length}
-                    next={getData}
+                    next={getMoreData}
                     hasMore={hasMore}
                 >
                     <Results results={results}></Results>

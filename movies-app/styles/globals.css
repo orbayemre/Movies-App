@@ -74,7 +74,12 @@ body::-webkit-scrollbar-thumb {
     background-color: #FFC23C;
     border-radius: 30px;
 }
-
+.infinite-scroll-component{
+    overflow-x: hidden !important;
+}
+.infinite-scroll-component__outerdiv{
+    overflow-x: hidden !important;
+}
 
 .h-rb{
     height: 75%;
@@ -88,6 +93,9 @@ body::-webkit-scrollbar-thumb {
 .w-twentyfive{
     width: 25%;
 
+}
+.similarBtm{
+    bottom: -580px;
 }
 .text-small{
     font-size: 11px;

@@ -5,11 +5,13 @@ export const searchFilter = createSlice({
     initialState:{
         query:"",
         genre:"all",
-        results:[]
     },
     reducers:{
         setQuery : (state,action) =>{
             state.query = action.payload;
+        },
+        setGenre : (state,action) =>{
+            state.genre = action.payload;
         }
     },
 })

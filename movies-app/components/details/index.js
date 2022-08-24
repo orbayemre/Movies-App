@@ -7,9 +7,7 @@ import useDetailsFetch from "./useDetailsFetch";
 
 export default function DetailsComp({detailId,media}){
 
-    const {data,cast,review,similar,trailer} = useDetailsFetch(detailId,media);
-
-
+    const {data,similar,review,cast,trailer} = useDetailsFetch(detailId,media);
     return(
         <div>
             <Head>
@@ -25,6 +23,7 @@ export default function DetailsComp({detailId,media}){
                 review={review}
                 similar={similar}
                 trailer={trailer}
+                media={media}
             />
             <Provider store={store}>
                 <NavBar/>

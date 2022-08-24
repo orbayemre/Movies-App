@@ -2,12 +2,13 @@ import Poster from "./poster";
 import HeaderContent from "./headerContent";
 import Cast from "./cast";
 import Review from "./review";
-export default function DetailsHeader({result,cast,review,similar,trailer}){
+import Similar from "./similar";
+
+export default function DetailsHeader({result,review,similar,trailer,cast,media}){
 
     var posterImg = "https://image.tmdb.org/t/p/original"+ result?.poster_path;
     var trailerUrl,trailerKey;
-
-    trailer?.results.forEach((item)=>{
+    trailer?.results?.forEach((item)=>{
         if(item?.type === "Trailer"){
             if(item?.site === "YouTube") {
                 trailerUrl = "https://www.youtube.com/watch?v="+item?.key;
@@ -19,11 +20,6 @@ export default function DetailsHeader({result,cast,review,similar,trailer}){
         else trailerUrl = "";
 
     })
-
-    console.log(cast);
-    console.log(review);
-    console.log(similar);
-    console.log(result);
     return(
         <>
             <Poster
@@ -38,6 +34,7 @@ export default function DetailsHeader({result,cast,review,similar,trailer}){
             />
             <Cast castData={cast}/>
             <Review reviewData={review}/>
+            <Similar similarData={similar} media={media}/>
         </>
     )
 }
