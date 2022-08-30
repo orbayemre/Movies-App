@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import {useEffect, useRef} from "react";
 import {setQuery} from "../../../stores/searchFilter";
 import {useDispatch} from "react-redux";
+import NavBarAuth from "./auth";
+import LottieAnimation from "../lottieAnimation";
 
 
 export default function NavBar(){
     const router = useRouter();
     const navbar = useRef();
-    const searchIcon = useRef(null);
-    const movieRef = useRef(null);
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -31,9 +31,6 @@ export default function NavBar(){
         }
 
     },[])
-    useEffect(() => {
-        import("@lottiefiles/lottie-player");
-    });
     const searchChange = (e)=>{
         dispatch(setQuery(e.target.value));
     }
@@ -47,15 +44,8 @@ export default function NavBar(){
     return(
         <div ref={navbar} className="fixed duration-700 w-full h-12 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
             <span className="disableSelect text-4xl ml-10 text-baseColor font-Teko cursor-pointer flex justify-start items-center space-x-1">
-                <lottie-player
-                id="firstLottie"
-                ref={movieRef}
-                autoplay
-                loop
-                mode="normal"
-                src="https://assets1.lottiefiles.com/packages/lf20_j1adxtyb.json"
-                style={{ width: "60px", height: "60px" }}
-                ></lottie-player>
+               <LottieAnimation link={"https://assets1.lottiefiles.com/packages/lf20_j1adxtyb.json"}
+                                width={"60px"} height={"60px"}/>
                 <Link href="/">
                     <a>Movies App</a>
                 </Link>
@@ -81,23 +71,13 @@ export default function NavBar(){
 
                     <Link href="/search">
                         <a>
-                            <lottie-player
-                                id="firstLottie"
-                                ref={searchIcon}
-                                autoplay
-                                loop
-                                mode="normal"
-                                src="https://assets8.lottiefiles.com/private_files/lf30_zuwgbw1h.json"
-                                style={{ width: "30px", height: "30px" }}
-                            ></lottie-player>
+                            <LottieAnimation link={"https://assets8.lottiefiles.com/private_files/lf30_zuwgbw1h.json"}
+                                             width={"30px"} height={"30px"}/>
                         </a>
                     </Link>
                 </div>
+                <NavBarAuth/>
 
-                <div className='pl-10 space-x-3 text-sm'>
-                    <span className='cursor-pointer hover:text-baseColor duration-100 '>Sign In </span>
-                    <span className='bg-baseColor  hover:bg-background hover:text-baseColor duration-200 cursor-pointer rounded-xl text-background px-3 py-1'>Sign Up</span>
-                </div>
             </div>
         </div>
     )

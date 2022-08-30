@@ -1,12 +1,7 @@
 import Text from "./text";
-import {useEffect,useRef} from "react";
+import LottieAnimation from "../../../shared/lottieAnimation";
 
 export default function Review({reviewData}){
-
-    const notFoundIcon = useRef(null);
-    useEffect(() => {
-        import("@lottiefiles/lottie-player");
-    });
 
     if(reviewData?.results?.length>0){
         var results=[];
@@ -55,15 +50,8 @@ export default function Review({reviewData}){
             <div className="w-1/4 h-auto relative p-2  left-20 bottom-72  rounded shadowType3 ">
                 <h1 className="text-3xl pl-4 text-baseColor font-bold font-Signika mb-2">Review</h1>
                <span className="font-bold font-Signika text-baseColor text-lg flex justify-center items-center flex-col ">
-                   <lottie-player
-                       id="firstLottie"
-                       ref={notFoundIcon}
-                       autoplay={true}
-                       loop={true}
-                       mode="normal"
-                       src="https://assets8.lottiefiles.com/packages/lf20_grav99as.json"
-                       style={{ width: "80px", height: "80px" }}
-                   ></lottie-player>
+                    <LottieAnimation link={"https://assets8.lottiefiles.com/packages/lf20_grav99as.json"}
+                                     width={"80px"} height={"80px"}/>
                    <span>No review found.</span>
                </span>
 

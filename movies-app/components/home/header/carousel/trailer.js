@@ -20,7 +20,6 @@ export default function Trailer(props){
             data?.results?.forEach((item)=>{
                 if(item?.type === "Trailer"){
                     if(item?.site === "YouTube") {
-                        console.log(item);
                         setTrailer("https://www.youtube.com/watch?v="+item?.key);
                     }
                 }

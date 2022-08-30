@@ -8,8 +8,6 @@ export default function Similar({similarData,media}){
         if(similarData?.results)
         results?.push(similarData?.results[i]);
     }
-
-    console.log(results);
     return(
         <div className="w-3/4 h-56 flex flex-wrap absolute -right-24 similarBtm">
             <h1 className="text-3xl text-baseColor pl-6 font-bold font-Signika">Similar {media === "movie"? "Movies":"Series" }</h1>

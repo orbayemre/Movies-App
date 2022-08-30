@@ -22,16 +22,16 @@ export default  function Results({results,time,delay,media}){
                 className="mySwiper w-full h-full top-50"
             >
                 {
-                    results.map(result => {
+                    results?.map(result => {
 
                             const posterLink = "https://image.tmdb.org/t/p/original"+ result?.poster_path.toString();
                             let link = media === "movie" ? "/movies/details?id="+result?.id :"/series/details?id="+result?.id;
                             var date;
                             date = result?.first_air_date || result?.release_date;
                             return (
-                                <SwiperSlide key={result?.id} className="h-80">
+                                <SwiperSlide  className="h-80">
                                     <Link href={link}>
-                                        <a>
+                                        <a key={result?.id}>
                                             <div id="resultBox" className="w-56 h-80 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
                                                 <div id="title" className=" opacity-0 duration-200 flex flex-col rounded-lg -space-y-1 text-baseColor  font-Signika z-10 w-full pb-0 pl-3 rounded-b-lg  bottom-0 absolute  text-white">
                                                     <span className="font-bold">{result?.title} {result?.name}</span>
