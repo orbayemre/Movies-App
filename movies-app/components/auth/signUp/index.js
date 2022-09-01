@@ -3,6 +3,7 @@ import LottieAnimation from "../../shared/lottieAnimation";
 import NavBar from "../../shared/navBar";
 import store from "../../../stores";
 import {Provider} from "react-redux";
+import {Toaster} from "react-hot-toast";
 
 export default function SignUpComp(){
     return(
@@ -21,6 +22,11 @@ export default function SignUpComp(){
             <Provider store={store}>
                 <NavBar />
             </Provider>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     )
 }

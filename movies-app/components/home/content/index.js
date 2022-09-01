@@ -11,7 +11,7 @@ export default function Content(){
     const [topRatedTvData, setTopRatedTvData] = useState([]);
     useEffect(()=>{
         getData();
-    })
+    },[])
     const getData = async () => {
         try{
 

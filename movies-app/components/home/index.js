@@ -22,6 +22,8 @@ export default function HomeComp({headerMov}){
 
             <Provider store={store}>
                 <Content/>
+            </Provider>
+            <Provider store={store}>
                 <NavBar/>
             </Provider>
         </div>

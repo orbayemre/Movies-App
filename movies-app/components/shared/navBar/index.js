@@ -2,10 +2,13 @@ import Link from 'next/link';
 import { useRouter } from "next/router";
 import {useEffect, useRef} from "react";
 import {setQuery} from "../../../stores/searchFilter";
-import {useDispatch} from "react-redux";
+import {logIn} from "../../../stores/auth";
+import {useDispatch, useSelector} from "react-redux";
 import NavBarAuth from "./auth";
 import LottieAnimation from "../lottieAnimation";
-
+import store from "../../../stores";
+import {Provider} from "react-redux";
+import {currentUser} from "../../../firebase";
 
 export default function NavBar(){
     const router = useRouter();
@@ -27,9 +30,8 @@ export default function NavBar(){
                 }
                 prevScrollpos = currentScrollPos;
             }
-
         }
-
+        dispatch(logIn(currentUser))
     },[])
     const searchChange = (e)=>{
         dispatch(setQuery(e.target.value));
@@ -38,8 +40,6 @@ export default function NavBar(){
         if(e.keyCode === 13){
         }
     }
-
-
 
     return(
         <div ref={navbar} className="fixed duration-700 w-full h-12 z-50 bg-black/40 top-0 flex justify-between items-center text-white ">
@@ -76,7 +76,10 @@ export default function NavBar(){
                         </a>
                     </Link>
                 </div>
+
+                <Provider store={store}>
                 <NavBarAuth/>
+                </Provider>
 
             </div>
         </div>

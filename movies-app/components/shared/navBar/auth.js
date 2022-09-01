@@ -1,6 +1,12 @@
 import Link from "next/link";
-
+import {useSelector} from "react-redux";
 export default function NavBarAuth(){
+
+    const {user} = useSelector(state => state.auth) ;
+    if(user){
+        console.log(user);
+    }
+
     return(
         <div className='pl-10 space-x-3 text-sm'>
             <Link href={"/signin"}>

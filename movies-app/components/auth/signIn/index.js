@@ -3,6 +3,7 @@ import SignUpForm from "./signInForm";
 import {Provider} from "react-redux";
 import store from "../../../stores";
 import NavBar from "../../shared/navBar";
+import {Toaster} from "react-hot-toast";
 
 export default function SignInComp(){
     return(
@@ -18,6 +19,10 @@ export default function SignInComp(){
                 <LottieAnimation link={"https://assets5.lottiefiles.com/packages/lf20_qm8eqzse.json"}
                                  width={"300px"} height={"300px"}/>
             </div>
+            <Toaster
+            position="top-center"
+            reverseOrder={false}
+            />
             <Provider store={store}>
                 <NavBar />
             </Provider>
