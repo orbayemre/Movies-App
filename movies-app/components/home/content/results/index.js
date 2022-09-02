@@ -31,8 +31,8 @@ export default  function Results({results,time,delay,media}){
                             return (
                                 <SwiperSlide  className="h-80">
                                     <Link href={link}>
-                                        <a key={result?.id}>
-                                            <div id="resultBox" className="w-56 h-80 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
+                                        <a >
+                                            <div key={result?.id} id="resultBox" className="w-56 h-80 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
                                                 <div id="title" className=" opacity-0 duration-200 flex flex-col rounded-lg -space-y-1 text-baseColor  font-Signika z-10 w-full pb-0 pl-3 rounded-b-lg  bottom-0 absolute  text-white">
                                                     <span className="font-bold">{result?.title} {result?.name}</span>
                                                     <span className="text-sm text-baseColor/70" >{date?.substring(0,4)}</span>

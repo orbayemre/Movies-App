@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import {useEffect, useRef} from "react";
 import {setQuery} from "../../../stores/searchFilter";
 import {logIn} from "../../../stores/auth";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import NavBarAuth from "./auth";
 import LottieAnimation from "../lottieAnimation";
 import store from "../../../stores";
@@ -77,9 +77,7 @@ export default function NavBar(){
                     </Link>
                 </div>
 
-                <Provider store={store}>
                 <NavBarAuth/>
-                </Provider>
 
             </div>
         </div>

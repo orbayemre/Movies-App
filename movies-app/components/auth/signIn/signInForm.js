@@ -22,11 +22,18 @@ export default function SignInForm(){
         if(!email){toast.error("Please type your e-mail address!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         if(!password){toast.error("Please type your password!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         else if(!validateEmail(email)){toast.error("You typed a invalid e-mail address. Please type a valid e-mail!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
-        else signIn(email,password,rememberMe)
+        else {
+            await signIn(email,password,rememberMe).then(errorMessage =>{
+                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                else router.push("/");
+            })
+        }
     }
     const handleSignInGoogle = async ()=>{
-        await signInWithGoogle();
-        router.push("/");
+        await signInWithGoogle().then(errorMessage =>{
+            if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+            else router.push("/");
+        })
 
     }
 
@@ -37,6 +44,11 @@ export default function SignInForm(){
     }
     const handleSignOut = async ()=>{
         signOut();
+        await signOut().then(errorMessage =>{
+            if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+            else router.push("/");
+        })
+
     }
     return(
         <div className="w-1/3 h-auto rounded-lg shadowType4 z-10" >

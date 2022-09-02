@@ -13,11 +13,19 @@ import { getFirestore,doc, setDoc ,getDoc,updateDoc,deleteDoc} from "firebase/fi
 /*
 
 TODO
- error messages,
  conditional rendering according to auth,
  account page
 */
-
+const errors ={
+    "auth/email-already-in-use" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",
+    "auth/email-already-exists" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",
+    "auth/internal-error" : "An unexpected error occurred. Please try again later.",
+    "auth/invalid-argument" : "Invalid arguments",
+    "auth/invalid-email" : "You typed a invalid e-mail address. Please type a valid e-mail.",
+    "auth/invalid-password" : "You typed a invalid password. Please type a valid password.",
+    "auth/wrong-password" : "Wrong password.Please make sure you enter your password correctly.",
+    "auth/user-not-found" : "Wrong password or E-mail address. Please make sure you enter your email address and password correctly.",
+}
 
 import store from "./stores";
 import {logIn as handleLogIn,logOut as handleLogOut} from "./stores/auth";
@@ -51,8 +59,9 @@ export const signUp = async (email,password,rememberMe) =>{
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             bookmarks :[],
         });*/
+        return null;
     }catch (error){
-        console.log(error.message);
+    return errors[error.code];
     }
 }
 
@@ -65,7 +74,7 @@ export const signIn = async (email,password,rememberMe) =>{
         }
         await signInWithEmailAndPassword(auth,email,password);
     }catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 
@@ -88,7 +97,7 @@ export const signInWithGoogle = async ()=>{
 
     }catch(error) {
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(error.message,error.customData,credential);
+        return errors[error.code];
     }
 }
 
@@ -97,7 +106,7 @@ export const signOut = async () =>{
     try {
         await signOutOfFirebase(auth);
     }catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 
@@ -105,7 +114,7 @@ export const sendEmailVery= async () =>{
     try {
         await sendEmailVerification(auth.currentUser);
     }catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 
@@ -117,7 +126,7 @@ export const updProfile = async (newName,newPhotoUrl)=>{
         });
     }
     catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 
@@ -126,7 +135,7 @@ export const updEmail = async (newEmail)=>{
         await updateEmail(auth.currentUser,newEmail);
     }
     catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 
@@ -136,7 +145,7 @@ export const updPassword = async (newPassword)=>{
         await updatePassword(auth.currentUser,newPassword);
     }
     catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 export const deleteAccount = async ()=>{
@@ -145,7 +154,7 @@ export const deleteAccount = async ()=>{
         await deleteUser(auth.currentUser);
     }
     catch (error){
-        console.log(error.message);
+        return errors[error.code];
     }
 }
 

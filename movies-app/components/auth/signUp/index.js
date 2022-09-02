@@ -26,6 +26,7 @@ export default function SignUpComp(){
             <Toaster
                 position="top-center"
                 reverseOrder={false}
+                toastOptions={{duration: 5000,}}
             />
         </div>
     )

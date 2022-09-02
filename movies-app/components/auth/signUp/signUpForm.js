@@ -25,18 +25,26 @@ export default function SignUpForm(){
             );
     };
     const handleSubmit = async ()=>{
+
+
         if(!email){toast.error("E-mail is required. Please type a valid e-mail address!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         else if(!(password === confirmPassword)){toast.error("Password do not match. Please type again!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         else if(!validateEmail(email)){toast.error("You typed a invalid e-mail address. Please type a valid e-mail!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
-        else signUp(email,password,rememberMe);
+        else {
+            await signUp(email,password,rememberMe).then(errorMessage =>{
+                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                else router.push("/");
+            })
+        }
 
         if(firstName && lastName) updProfile(firstName+" "+lastName);
 
-        router.push("/");
     }
     const handleSignInGoogle = async ()=>{
-        await signInWithGoogle();
-        router.push("/");
+            await signInWithGoogle().then(errorMessage =>{
+                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                else router.push("/");
+            })
 
     }
 
