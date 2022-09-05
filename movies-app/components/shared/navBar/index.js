@@ -6,8 +6,6 @@ import {logIn} from "../../../stores/auth";
 import {useDispatch} from "react-redux";
 import NavBarAuth from "./auth";
 import LottieAnimation from "../lottieAnimation";
-import store from "../../../stores";
-import {Provider} from "react-redux";
 import {currentUser} from "../../../firebase";
 
 export default function NavBar(){
@@ -76,7 +74,6 @@ export default function NavBar(){
                         </a>
                     </Link>
                 </div>
-
                 <NavBarAuth/>
 
             </div>

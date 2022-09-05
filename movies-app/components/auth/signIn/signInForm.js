@@ -42,14 +42,6 @@ export default function SignInForm(){
             handleSubmit();
         }
     }
-    const handleSignOut = async ()=>{
-        signOut();
-        await signOut().then(errorMessage =>{
-            if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
-            else router.push("/");
-        })
-
-    }
     return(
         <div className="w-1/3 h-auto rounded-lg shadowType4 z-10" >
             <div className="disableSelect flex flex-col space-y-3 my-5 items-center justify-center">
@@ -98,7 +90,6 @@ export default function SignInForm(){
                         </a>
                     </Link>
                 </div>
-                <span onClick={handleSignOut}>Sign Out</span>
             </div>
         </div>
     )

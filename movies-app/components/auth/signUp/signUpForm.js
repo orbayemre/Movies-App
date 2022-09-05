@@ -45,7 +45,6 @@ export default function SignUpForm(){
                 if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
                 else router.push("/");
             })
-
     }
 
     const keyDown13 = (e) =>{

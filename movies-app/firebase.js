@@ -15,6 +15,14 @@ import { getFirestore,doc, setDoc ,getDoc,updateDoc,deleteDoc} from "firebase/fi
 TODO
  conditional rendering according to auth,
  account page
+
+
+
+ ////
+
+ koşullu render i çözüldü
+ user redux hatası çözülde
+ account ve dashboard yap
 */
 const errors ={
     "auth/email-already-in-use" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",
@@ -29,7 +37,6 @@ const errors ={
 
 import store from "./stores";
 import {logIn as handleLogIn,logOut as handleLogOut} from "./stores/auth";
-import toast from "react-hot-toast";
 
 
 const firebaseConfig = {
@@ -105,6 +112,8 @@ export const signInWithGoogle = async ()=>{
 export const signOut = async () =>{
     try {
         await signOutOfFirebase(auth);
+        localStorage.setItem("isLogin","false");
+
     }catch (error){
         return errors[error.code];
     }
