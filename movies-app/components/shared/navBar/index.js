@@ -4,8 +4,8 @@ import {useEffect, useRef} from "react";
 import {setQuery} from "../../../stores/searchFilter";
 import {logIn} from "../../../stores/auth";
 import {useDispatch} from "react-redux";
-import NavBarAuth from "./auth";
 import LottieAnimation from "../lottieAnimation";
+import NavBarAuth from "./auth";
 import {currentUser} from "../../../firebase";
 
 export default function NavBar(){

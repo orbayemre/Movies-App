@@ -10,20 +10,6 @@ import { getFirestore,doc, setDoc ,getDoc,updateDoc,deleteDoc} from "firebase/fi
 
 */
 
-/*
-
-TODO
- conditional rendering according to auth,
- account page
-
-
-
- ////
-
- koşullu render i çözüldü
- user redux hatası çözülde
- account ve dashboard yap
-*/
 const errors ={
     "auth/email-already-in-use" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",
     "auth/email-already-exists" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",

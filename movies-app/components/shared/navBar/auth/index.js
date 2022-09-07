@@ -4,10 +4,11 @@ import Dashboard from "./dashboard";
 
 export default function NavBarAuth(){
 
-
     const {user} = useSelector(state => state.auth);
+
     return !user ?(
         <div className='pl-10 space-x-3 text-sm'>
+
             <Link href={"/signin"}>
                 <a className='cursor-pointer hover:text-baseColor duration-100 '>Sign In </a>
             </Link>
@@ -17,8 +18,10 @@ export default function NavBarAuth(){
             </Link>
         </div>
     ) : (
-        <Dashboard imgUrl={user?.photoURL} userMail={user?.email}
-                   userName={user?.displayName}/>)
+        <>
+            <Dashboard imgUrl={user?.photoURL} userMail={user?.email}
+                       userName={user?.displayName}/>
+        </>)
 
 
 }
