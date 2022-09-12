@@ -159,6 +159,6 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         store.dispatch(handleLogIn(user));
     } else {
-        store.dispatch(handleLogOut());
+        store.dispatch(handleLogOut(false));
     }
 });

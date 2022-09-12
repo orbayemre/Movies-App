@@ -183,6 +183,16 @@ body::-webkit-scrollbar-thumb {
     box-shadow: none;
 }
 
+#editIcon {
+    transition: .5s ease;
+    opacity: 0;
+}
+#profileImgBox:hover #editIcon{
+    opacity: 1;
+}
+#profileImgBox:hover #profileImg {
+    opacity: 0.6;
+}
 
 @keyframes boxright {
     from {
