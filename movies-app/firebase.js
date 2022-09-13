@@ -98,7 +98,6 @@ export const signInWithGoogle = async ()=>{
 export const signOut = async () =>{
     try {
         await signOutOfFirebase(auth);
-        localStorage.setItem("isLogin","false");
 
     }catch (error){
         return errors[error.code];
@@ -127,6 +126,7 @@ export const updProfile = async (newName,newPhotoUrl)=>{
 
 export const updEmail = async (newEmail)=>{
     try{
+        console.log(newEmail);
         await updateEmail(auth.currentUser,newEmail);
     }
     catch (error){

@@ -2,16 +2,20 @@ import NavBar from "../../shared/navBar";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import { Fragment, useState } from 'react'
+import {Fragment, useState} from 'react'
 import {useSelector} from "react-redux";
 import { Dialog, Transition } from '@headlessui/react'
-import {updProfile} from "../../../firebase";
+import {signOut, updEmail, updProfile} from "../../../firebase";
+import toast,{Toaster} from "react-hot-toast";
 
 const NavigationList = () => {
     const router = useRouter();
     const activeTabBorderPos =  router?.asPath.split("#")[1] ==="settings" ? "top-20 " :
         router?.asPath.split("#")[1] ==="bookmarks" ? "top-10" :"top-0" ;
-
+    const handleSignOut = async ()=>{
+        await signOut();
+        await router.push("/");
+    }
     return(
             <div className="w-1/6 h-40 flex flex-col rounded shadowType3 relative">
                 <span className={"absolute right-0 duration-200 bg-opacity-0 w-3 h-10 border-r-2 border-baseColor "+activeTabBorderPos}>
@@ -55,7 +59,7 @@ const NavigationList = () => {
                     </Link>
                 </div>
                 <div className="w-full h-10">
-                    <div className="text-baseColor rounded-b font-Signika font-bold cursor-pointer duration-200 hover:bg-baseColor hover:text-background group
+                    <div onClick={handleSignOut} className="cursor-pointer text-baseColor rounded-b font-Signika font-bold cursor-pointer duration-200 hover:bg-baseColor hover:text-background group
                                 flex w-full items-center space-x-2 px-4 py-2 text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
@@ -86,9 +90,7 @@ const ProfTab = ()=>{
     }
     const handleSetProfile = async () =>{
         await updProfile(newName,newImg);
-        console.log(newName,newImg);
     }
-    console.log(user);
     return(
         <>
             <div className="w-full flex flex-col my-5 ml-10">
@@ -97,12 +99,17 @@ const ProfTab = ()=>{
                 </h1>
                 <div id="profileImgBox" className="relative flex justify-center items-center cursor-pointer"
                      onClick={() => setIsOpen(true)}>
+                    {user?.photoURL === null ?
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-baseColor w-40 h-40">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    :
                     <img id="profileImg" src={newImg !== null ? newImg : user?.photoURL} onError={({ currentTarget }) => {
                         currentTarget.onerror = null;
                         currentTarget.src=user?.photoURL;
                     }}
                      className="w-40 h-40 mt-2 rounded-full duration-200"
-                    />
+                    />}
                     <span id="editIcon" className="absolute text-white z-30 opacity-0 duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                              className="w-10 h-10">
@@ -176,18 +183,159 @@ const ProfTab = ()=>{
         </>
     )
 }
+
 const BookmarksTab = ()=>{
     return(
         <>
-            BookmarksTab
+
         </>
     )
 }
+
+
+
+
+const ModalSettings = ({children,setIsOpen,isOpen}) =>{
+
+    return(<Transition appear show={isOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+                <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                </Transition.Child>
+
+                <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-background p-6 text-left align-middle shadow-xl transition-all">
+                                {children}
+                            </Dialog.Panel>
+                        </Transition.Child>
+                    </div>
+                </div>
+            </Dialog>
+        </Transition>
+
+    )
+
+
+}
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+
 const SettingsTab = ()=>{
+
+    const {user} = useSelector(state => state.auth);
+    const [isOpenEmailChangeModal, setIsOpenEmailChangeModal] = useState(false);
+    const [newEmail, setNewEmail] = useState(null);
+    const handleUpdEmail = async ()=>{
+        if(!validateEmail(newEmail)){toast.error("You typed a invalid e-mail address. Please type a valid e-mail!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});}
+        else{
+            await updEmail(newEmail).then(errorMessage =>{
+                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                else setIsOpenEmailChangeModal(false);
+            })
+
+        }
+    }
+    var providerGoogle;
+    user?.providerData?.map(prov => {
+        if(prov?.providerId ==="google.com") {providerGoogle = true}
+        else {providerGoogle = false}
+    })
     return(
-        <>
-            SettingsTab
-        </>
+        <div className="flex flex-col ">
+            <div className="flex flex-col items-start justify-center space-y-8 font-Signika w-full my-5 ml-10">
+
+                { providerGoogle ?
+                    <>
+                        <h1 className="text-lg  font-bold text-baseColor border-b-2 border-baseColor rounded-bl">E-mail</h1>
+                        <div className="flex items-center justify-start space-x-2 w-full mt-3">
+                            <img className="w-6 h-6" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"}/>
+                            <div className="bg-background/80 font-Signika text-baseColor font-bold w-1/2 duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor">
+                                {user?.email}
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <h1 className="text-lg  font-bold text-baseColor border-b-2 border-baseColor rounded-bl">E-mail</h1>
+                        <div className="flex items-center justify-start space-x-2 w-1/2 mt-3">
+                                <input value={user?.email} readOnly={true}
+                                className="bg-background/80 font-Signika text-baseColor font-bold w-1/2 duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor"/>
+                                <button onClick={() => setIsOpenEmailChangeModal(true)} className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
+                                hover:bg-transparent hover:text-baseColor">
+                                    Change
+                                </button>
+                        </div>
+                        <ModalSettings setIsOpen={setIsOpenEmailChangeModal} isOpen={isOpenEmailChangeModal}>
+                            <div className="disableSelect flex flex-col items-start justify-center space-y-3">
+                                <h1 className="text-baseColor font-Signika font-bold text-sm">Enter your new e-mail.</h1>
+                                <input onChange={(e)=>setNewEmail(e.target.value)} className="bg-gray-300 shadowType1 font-Signika text-background font-bold  pl-2 duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor"/>
+                                <button onClick={handleUpdEmail} className="w-full h-8 px-4 rounded duration-200 text-background font-Signika cursor-pointer bg-green-500 shadowType1 text-center
+                                hover:bg-green-500/70">
+                                    Save
+                                </button>
+                            </div>
+                        </ModalSettings>
+                        {user?.emailVerified ===false &&
+                            <div className="flex items-center justify-start space-x-3 w-full mt-3">
+                                <span className="text-baseColor/80 text-sm">
+                                    You haven't verified your e-mail address yet. <br/> Please verify your e-mail address.
+                                </span>
+                                <button className="w-auto h-8 px-2 rounded duration-200 text-sm text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
+                                hover:bg-transparent hover:text-baseColor">
+                                    Verify
+                                </button>
+                            </div>
+                        }
+                    </>
+                }
+            </div>
+            {providerGoogle ? "" :
+                <div className="flex flex-col items-start justify-center space-y-4 font-Signika w-96 my-5 ml-10">
+                    <h1 className="text-lg  font-bold text-baseColor border-b-2 border-baseColor rounded-bl">Password</h1>
+                    <button className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
+                        hover:bg-transparent hover:text-baseColor">
+                        Change Your Password
+                    </button>
+                </div>
+            }
+            <div className="flex flex-col items-start justify-center space-y-4 font-Signika w-96 my-5 ml-10">
+                <h1 className="text-lg  font-bold text-red-600 border-b-2 border-red-600 rounded-bl">Danger Zone</h1>
+                <span className="text-red-600 text-sm font-bold">
+                        Wait,wait,are you sure about that?
+                </span>
+                <button className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-red-600 shadowType1 text-center border border-red-600
+                        hover:bg-transparent hover:text-red-600">
+                    Delete your account
+                </button>
+            </div>
+        </div>
     )
 }
 
@@ -207,19 +355,20 @@ export default function AccountComp(){
                 <div className="absolute w-3/4 h-5/6 flex space-x-3 disableSelect">
                     <NavigationList/>
                     <div className="w-5/6 h-full  rounded shadowType3">
-                        <div id="profTab" className={activeTab === "profile" ? "inline-block" : "hidden"}>
+                        <div id="profTab"  className={(activeTab === "profile" || activeTab === undefined ) ? "inline-block": "hidden"}>
                             <ProfTab/>
                         </div>
-                        <div className={activeTab === "bookmarks" ? "inline-block" : "hidden"}>
+                        <div className={activeTab === "bookmarks" ? "inline-block w-full" : "hidden"}>
                             <BookmarksTab/>
                         </div>
-                        <div className={activeTab === "settings" ? "inline-block" : "hidden"}>
+                        <div className={activeTab === "settings" ? "inline-block w-full" : "hidden"}>
                             <SettingsTab/>
                         </div>
                     </div>
                 </div>
             </div>
             <NavBar/>
+            <Toaster/>
         </>
     )
 
