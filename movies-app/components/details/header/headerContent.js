@@ -1,17 +1,35 @@
 import {useEffect, useRef, useState} from "react";
+import {addBookmark, deleteBookmark, getBookmarks} from "../../../firebase";
 
 export default function HeaderContent({result,watchNowLink,trailerKey}){
 
-    const [bookmark,setBookmark] = useState(true);
+
+
+    const [bookmark,setBookmark] = useState(false);
     const bookmarkRef = useRef();
+    getBookmarks().then(({bookmarks})=>{
+        bookmarks?.map(bookmark =>{
+            if(result?.id === bookmark){
+                console.log("exist");
+                setBookmark(true);
+            }
+        })
+    });
+
+
     var date = result?.first_air_date || result?.release_date;
     var time="";var streamerLogo;
     if(result?.networks)  streamerLogo="https://image.tmdb.org/t/p/original"+result?.networks[0]?.logo_path;
     if(result?.runtime){time = Math.floor(result?.runtime/60)+" hours "+result?.runtime%60+" minutes"}
     else if(result?.number_of_seasons){ time = result?.number_of_seasons+" seasons"}
+    const handleToggleBookmark = async ()=>{
+        if(bookmark) await  deleteBookmark(result?.id);
+        else await  addBookmark(result?.id);
+        await  setBookmark(!bookmark);
+    }
 
-
-
+    useEffect(()=>{
+    },[])
     useEffect(()=>{
         bookmark ? bookmarkRef.current.setAttribute("class", "w-14 h-14 fill") : bookmarkRef.current.setAttribute("class", "w-14 h-14")
     })
@@ -59,7 +77,7 @@ export default function HeaderContent({result,watchNowLink,trailerKey}){
                         </div> : ""
                     }
                     <div className="w-20 h-20 disableSelect relative cursor-pointer">
-                        <svg ref={bookmarkRef} onClick={()=> setBookmark(!bookmark)} className="w-14 h-14 " xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="#FFC23C">
+                        <svg ref={bookmarkRef} onClick={handleToggleBookmark} className="w-14 h-14 " xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke="#FFC23C">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                         </svg>
                     </div>

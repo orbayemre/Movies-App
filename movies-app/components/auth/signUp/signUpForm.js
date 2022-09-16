@@ -28,7 +28,8 @@ export default function SignUpForm(){
 
 
         if(!email){toast.error("E-mail is required. Please type a valid e-mail address!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
-        else if(!(password === confirmPassword)){toast.error("Password do not match. Please type again!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
+        else if(!(password === confirmPassword)){toast.error("Passwords do not match. Please type again!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
+        else if(!password){toast.error("Password is required. Please type a password!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         else if(!validateEmail(email)){toast.error("You typed a invalid e-mail address. Please type a valid e-mail!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
         else {
             await signUp(email,password,rememberMe).then(errorMessage =>{

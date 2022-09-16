@@ -5,7 +5,15 @@ import Link from "next/link";
 import {Fragment, useState} from 'react'
 import {useSelector} from "react-redux";
 import { Dialog, Transition } from '@headlessui/react'
-import {signOut, updEmail, updProfile} from "../../../firebase";
+import {
+    deleteAccount,
+    getBookmarks,
+    sendEmailVery,
+    signOut,
+    updEmail,
+    updPassword,
+    updProfile
+} from "../../../firebase";
 import toast,{Toaster} from "react-hot-toast";
 
 const NavigationList = () => {
@@ -99,7 +107,7 @@ const ProfTab = ()=>{
                 </h1>
                 <div id="profileImgBox" className="relative flex justify-center items-center cursor-pointer"
                      onClick={() => setIsOpen(true)}>
-                    {user?.photoURL === null ?
+                    {!user?.photoURL && !newImg?
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-baseColor w-40 h-40">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -185,10 +193,12 @@ const ProfTab = ()=>{
 }
 
 const BookmarksTab = ()=>{
+    const [bookmarks,setBookmarks] = useState([])
+    getBookmarks().then(({bookmarks})=> {setBookmarks(bookmarks);});
     return(
-        <>
-
-        </>
+        <div className="w-full flex flex-col my-5 ml-10">
+            {bookmarks?.map(bookmark=>{return bookmark+" "})}
+        </div>
     )
 }
 
@@ -248,16 +258,52 @@ const SettingsTab = ()=>{
 
     const {user} = useSelector(state => state.auth);
     const [isOpenEmailChangeModal, setIsOpenEmailChangeModal] = useState(false);
+    const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] = useState(false);
+    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [newEmail, setNewEmail] = useState(null);
+    const [newPassword, setNewPassword] = useState(null);
+    const [newPasswordConfirm, setNewPasswordConfirm] = useState(null);
+
     const handleUpdEmail = async ()=>{
         if(!validateEmail(newEmail)){toast.error("You typed a invalid e-mail address. Please type a valid e-mail!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});}
         else{
             await updEmail(newEmail).then(errorMessage =>{
                 if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
-                else setIsOpenEmailChangeModal(false);
+                else {
+                    setIsOpenEmailChangeModal(false);
+                    setNewEmail(null);
+                    toast.success("Your e-mail has been changed successfully.",{style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+
+                }
+
             })
 
         }
+    }
+    const handleUpdPassword = async ()=>{
+        if(!(newPassword === newPasswordConfirm)){toast.error("Passwords do not match. Please type again!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
+        else if(!newPassword){toast.error("Password is required. Please type a password!", {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},})}
+        else{
+            await updPassword(newPassword).then(errorMessage =>{
+                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                else {
+                    setNewPassword(null);
+                    setNewPasswordConfirm(null);
+                    setIsOpenPasswordChangeModal(false);
+                    toast.success("Your password has been changed successfully.",{style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+                }
+            });
+        }
+    }
+    const handleDltAccount = async ()=>{
+        await deleteAccount().then(errorMessage =>{
+            toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+        });
+    }
+    const handleSendVerifyEmail = async ()=>{
+        await sendEmailVery().then(errorMessage =>{
+            toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+        })
     }
     var providerGoogle;
     user?.providerData?.map(prov => {
@@ -294,8 +340,8 @@ const SettingsTab = ()=>{
                         <ModalSettings setIsOpen={setIsOpenEmailChangeModal} isOpen={isOpenEmailChangeModal}>
                             <div className="disableSelect flex flex-col items-start justify-center space-y-3">
                                 <h1 className="text-baseColor font-Signika font-bold text-sm">Enter your new e-mail.</h1>
-                                <input onChange={(e)=>setNewEmail(e.target.value)} className="bg-gray-300 shadowType1 font-Signika text-background font-bold  pl-2 duration-200 rounded outline-none placeholder:text-background font-bold
-                                focus:outline-offset-1 focus:outline-baseColor"/>
+                                <input value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} className="bg-gray-300 shadowType1  font-Signika text-background font-bold  pl-2  text-sm duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor" type={"text"}/>
                                 <button onClick={handleUpdEmail} className="w-full h-8 px-4 rounded duration-200 text-background font-Signika cursor-pointer bg-green-500 shadowType1 text-center
                                 hover:bg-green-500/70">
                                     Save
@@ -307,7 +353,7 @@ const SettingsTab = ()=>{
                                 <span className="text-baseColor/80 text-sm">
                                     You haven't verified your e-mail address yet. <br/> Please verify your e-mail address.
                                 </span>
-                                <button className="w-auto h-8 px-2 rounded duration-200 text-sm text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
+                                <button onClick={handleSendVerifyEmail} className="w-auto h-8 px-2 rounded duration-200 text-sm text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
                                 hover:bg-transparent hover:text-baseColor">
                                     Verify
                                 </button>
@@ -317,23 +363,46 @@ const SettingsTab = ()=>{
                 }
             </div>
             {providerGoogle ? "" :
-                <div className="flex flex-col items-start justify-center space-y-4 font-Signika w-96 my-5 ml-10">
+            <div className="flex flex-col items-start justify-center space-y-4 font-Signika w-96 my-5 ml-10">
                     <h1 className="text-lg  font-bold text-baseColor border-b-2 border-baseColor rounded-bl">Password</h1>
-                    <button className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
+                    <button onClick={() => setIsOpenPasswordChangeModal(true)} className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-baseColor shadowType1 text-center border border-baseColor
                         hover:bg-transparent hover:text-baseColor">
                         Change Your Password
                     </button>
-                </div>
+                <ModalSettings  setIsOpen={setIsOpenPasswordChangeModal} isOpen={isOpenPasswordChangeModal}>
+                    <div className="disableSelect flex flex-col items-start justify-center space-y-3">
+                        <h1 className="text-baseColor font-Signika font-bold text-sm">Enter your new password.</h1>
+                        <input  value={newPassword} onChange={(e)=>setNewPassword(e.target.value)} placeholder={"New password"} type={"password"}
+                                className="bg-gray-300 shadowType1 font-Signika text-background font-bold  pl-2 text-sm duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor  placeholder:text-background/80 "/>
+                        <input value={newPasswordConfirm} onChange={(e)=>setNewPasswordConfirm(e.target.value)} placeholder={"Confirm new password"} type={"password"}
+                                className="bg-gray-300 shadowType1 font-Signika text-background font-bold  pl-2 text-sm duration-200 rounded outline-none placeholder:text-background font-bold
+                                focus:outline-offset-1 focus:outline-baseColor  placeholder:text-background/80"/>
+                        <button onClick={handleUpdPassword}
+                                className="w-full h-8 px-4 rounded duration-200 text-background font-Signika cursor-pointer bg-green-500 shadowType1 text-center
+                                hover:bg-green-500/70">
+                            Save
+                        </button>
+                    </div>
+                </ModalSettings>
+            </div>
             }
             <div className="flex flex-col items-start justify-center space-y-4 font-Signika w-96 my-5 ml-10">
                 <h1 className="text-lg  font-bold text-red-600 border-b-2 border-red-600 rounded-bl">Danger Zone</h1>
-                <span className="text-red-600 text-sm font-bold">
-                        Wait,wait,are you sure about that?
-                </span>
-                <button className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-red-600 shadowType1 text-center border border-red-600
+                <button onClick={()=>setIsOpenDeleteModal(true)} className="w-auto h-8 px-4 rounded duration-200 text-background cursor-pointer bg-red-600 shadowType1 text-center border border-red-600
                         hover:bg-transparent hover:text-red-600">
                     Delete your account
                 </button>
+                <ModalSettings  setIsOpen={setIsOpenDeleteModal} isOpen={isOpenDeleteModal}>
+                    <div className="disableSelect flex flex-col items-start justify-center space-y-3">
+                        <h1 className="text-red-600 font-Signika font-bold text-sm">Wait,wait,are you sure about that?</h1>
+                        <button onClick={handleDltAccount}
+                                className="w-full h-8 px-4 rounded duration-200 text-background font-Signika cursor-pointer bg-red-700 shadowType1 text-center
+                                hover:bg-red-800">
+                            DELETE
+                        </button>
+                    </div>
+                </ModalSettings>
             </div>
         </div>
     )
@@ -371,5 +440,4 @@ export default function AccountComp(){
             <Toaster/>
         </>
     )
-
 }

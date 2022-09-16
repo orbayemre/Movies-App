@@ -38,27 +38,3 @@ export default function DetailsHeader({result,review,similar,trailer,cast,media}
         </>
     )
 }
-/*
-genres
-first air date /release date
-vote average
-tagline
-
-homepage : yayıncıdaki link
-overview
-
-//only movie
-    time
-
-//only tv
-    last episode
-    sesions num
-    networks : yayıncı logo ve isim
-    ?seison episode part
-
-
-cast
-review
-similar
-
-*/

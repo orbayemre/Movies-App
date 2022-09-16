@@ -1,14 +1,13 @@
 import { initializeApp } from "firebase/app";
-
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut as signOutOfFirebase,
     onAuthStateChanged,sendEmailVerification,
     setPersistence,browserLocalPersistence,browserSessionPersistence,
     signInWithPopup, GoogleAuthProvider,
     updateProfile,updateEmail,updatePassword,deleteUser} from "firebase/auth";
-/*
+
 import { getFirestore,doc, setDoc ,getDoc,updateDoc,deleteDoc} from "firebase/firestore";
 
-*/
+
 
 const errors ={
     "auth/email-already-in-use" : "E-mail already in use. Please type a new e-mail or sign in with this e-mail.",
@@ -31,12 +30,14 @@ const firebaseConfig = {
     projectId: process.env.projectId,
     storageBucket:  process.env.storageBucket,
     messagingSenderId:  process.env.messagingSenderId,
-    appId:  process.env.appId
+    appId:  process.env.appId,
+    databaseURL: process.env.databaseURL,
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
 export const currentUser = auth.currentUser;
 
@@ -48,10 +49,10 @@ export const signUp = async (email,password,rememberMe) =>{
             await setPersistence(auth,browserSessionPersistence);
         }
         await createUserWithEmailAndPassword(auth,email,password);
-        /*
+
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             bookmarks :[],
-        });*/
+        });
         return null;
     }catch (error){
     return errors[error.code];
@@ -76,7 +77,7 @@ export const signInWithGoogle = async ()=>{
 
         await setPersistence(auth,browserLocalPersistence);
         const result =  await signInWithPopup(auth, provider);
-/*
+
         const docRef = doc(db, "users", auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
         if(!docSnap.data()){
@@ -84,7 +85,7 @@ export const signInWithGoogle = async ()=>{
                 bookmarks :[],
             });
         }
-        */
+
 
         await GoogleAuthProvider.credentialFromResult(result);
 
@@ -108,7 +109,8 @@ export const sendEmailVery= async () =>{
     try {
         await sendEmailVerification(auth.currentUser);
     }catch (error){
-        return errors[error.code];
+        console.log(error);
+        return error.message;
     }
 }
 
@@ -145,7 +147,7 @@ export const updPassword = async (newPassword)=>{
 }
 export const deleteAccount = async ()=>{
     try{
-        /* await deleteDoc(doc(db, "users", auth.currentUser.uid)); */
+        await deleteDoc(doc(db, "users", auth.currentUser.uid));
         await deleteUser(auth.currentUser);
     }
     catch (error){
@@ -153,6 +155,50 @@ export const deleteAccount = async ()=>{
     }
 }
 
+export const getBookmarks = async () =>{
+    try {
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        const bookmarks = docSnap.data().bookmarks
+        return new Promise(resolve => {
+            if(bookmarks) resolve({bookmarks,docSnap});
+        });
+    }
+    catch (error){
+        return {docSnap:null,bookmarks:null};
+    }
+}
+export const addBookmark = async (newBookmark)=>{
+
+    try{
+        const docRef = doc(db, "users", auth.currentUser.uid);
+
+        const docSnap = await getDoc(docRef);
+        const existData = docSnap.data().bookmarks
+
+        await updateDoc(docRef, {
+            bookmarks: [...existData, newBookmark],
+        });
+    }catch (error){
+        console.log(error.message);
+    }
+}
+export const deleteBookmark = async (dltBookmark) =>{
+    try{
+        const docRef = doc(db, "users",auth.currentUser.uid);
+
+        const docSnap = await getDoc(docRef);
+        const existData = docSnap.data().bookmarks
+        const newData = existData.filter(item => item !== dltBookmark);
+
+
+        await updateDoc(docRef, {
+            bookmarks: newData,
+        });
+    }catch (error){
+        console.log(error.message);
+    }
+}
 
 onAuthStateChanged(auth, (user) => {
 
