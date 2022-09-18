@@ -24,7 +24,11 @@ export default function HeaderContent({result,watchNowLink,trailerKey}){
     else if(result?.number_of_seasons){ time = result?.number_of_seasons+" seasons"}
     const handleToggleBookmark = async ()=>{
         if(bookmark) await  deleteBookmark(result?.id);
-        else await  addBookmark(result?.id);
+        else await  addBookmark({
+            id:result?.id,
+            poster:result?.poster_path,
+            media: result?.runtime ? "movie" : "tv"
+        });
         await  setBookmark(!bookmark);
     }
 

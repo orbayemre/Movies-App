@@ -29,8 +29,8 @@ export default function Carousel({headerMov,ids}) {
                 className="mySwiper w-full h-full top-50"
             >
                 {
-                    results.map(movie => {
-                            let backgroundImg ="https://image.tmdb.org/t/p/original"+ movie?.backdrop_path.toString();
+                    results?.map(movie => {
+                        let backgroundImg ="https://image.tmdb.org/t/p/original"+ movie?.backdrop_path.toString();
                             let posterImg ="https://image.tmdb.org/t/p/original"+ movie?.poster_path.toString();
                             let link = movie?.media_type === "movie" ? "/movies/details?id="+movie?.id :"/series/details?id="+movie?.id;
                             return (
@@ -49,10 +49,9 @@ export default function Carousel({headerMov,ids}) {
                                         <Trailer movieId={movie?.id} movieMedia={movie?.media_type} ids={ids}/>
                                     </div>
                                     <div className="z-20 absolute top-32 right-56 ">
-
                                         <Link href={link}>
                                             <a>
-                                            <img className="poster" src={posterImg}></img>
+                                            <img className="poster hover:opacity-90 duration-200" src={posterImg}></img>
                                             </a>
                                         </Link>
                                     </div>

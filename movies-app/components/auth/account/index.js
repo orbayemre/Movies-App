@@ -2,7 +2,7 @@ import NavBar from "../../shared/navBar";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {Fragment, useState} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
 import { Dialog, Transition } from '@headlessui/react'
 import {
@@ -192,12 +192,54 @@ const ProfTab = ()=>{
     )
 }
 
+
 const BookmarksTab = ()=>{
     const [bookmarks,setBookmarks] = useState([])
     getBookmarks().then(({bookmarks})=> {setBookmarks(bookmarks);});
     return(
-        <div className="w-full flex flex-col my-5 ml-10">
-            {bookmarks?.map(bookmark=>{return bookmark+" "})}
+        <div className="w-full flex flex-wrap justify-start items-center px-4">
+            {bookmarks?.map(bookmark=>{
+                function map(val, minA, maxA, minB, maxB) {
+                    return minB + ((val - minA) * (maxB - minB)) / (maxA - minA);
+                }
+                function Card3D(card, ev) {
+                    let img = card.querySelector('img');
+                    let imgRect = card.getBoundingClientRect();
+                    let width = imgRect.width;
+                    let height = imgRect.height;
+                    let mouseX = ev.offsetX;
+                    let mouseY = ev.offsetY;
+                    let rotateY = map(mouseX, 0, 180, -25, 25);
+                    let rotateX = map(mouseY, 0, 250, 25, -25);
+                    let brightness = map(mouseY, 0, 250, 1.5, 0.5);
+
+                    img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    img.style.filter = `brightness(${brightness})`;
+                }
+                var cards = document.querySelectorAll('.card3d');
+                cards.forEach((card) => {
+                    card.addEventListener('mousemove', (ev) => {
+                        Card3D(card, ev);
+                    });
+
+                    card.addEventListener('mouseleave', (ev) => {
+                        let img = card.querySelector('img');
+
+                        img.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                        img.style.filter = 'brightness(1)';
+                    });
+                });
+                const link = bookmark.media === "movie" ? "/movies/details?id="+bookmark.id :"/series/details?id="+bookmark.id;
+                return (
+                    <div className="card3d w-36 rounded-xl my-4 mx-4 cursor-pointer">
+                        <Link href={link}>
+                            <a>
+                                <img className="w-full h-full z-0 object-cover rounded-xl duration-200" src={"https://image.tmdb.org/t/p/original"+ bookmark.poster}/>
+                            </a>
+                        </Link>
+                    </div>
+                )
+            })}
         </div>
     )
 }
@@ -423,7 +465,7 @@ export default function AccountComp(){
             <div className="flex w-screen h-screen inset-0 justify-center items-center mt-5">
                 <div className="absolute w-3/4 h-5/6 flex space-x-3 disableSelect">
                     <NavigationList/>
-                    <div className="w-5/6 h-full  rounded shadowType3">
+                    <div className="w-5/6 rounded">
                         <div id="profTab"  className={(activeTab === "profile" || activeTab === undefined ) ? "inline-block": "hidden"}>
                             <ProfTab/>
                         </div>

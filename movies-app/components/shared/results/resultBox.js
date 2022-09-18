@@ -1,5 +1,8 @@
-import Link from "next/link";
+
 import {useRouter} from "next/router";
+
+
+
 export default function ResultBox({result,media}){
     const router = useRouter();
     var posterLink,link;
