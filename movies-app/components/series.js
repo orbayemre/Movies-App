@@ -1,6 +1,13 @@
+import {Provider} from "react-redux";
+import store from "../stores";
 import { useState } from "react";
+
+import Head from "next/head"
+import NavBar from "./shared/navBar";
+import GoToTop from "./shared/goToTop";
+
 import InfiniteScroll from "react-infinite-scroll-component";
-import Results from "../../shared/results";
+import Results from "./shared/results";
 
 const Content = ({ data }) => {
     const [series, setSeries] = useState(data);
@@ -42,4 +49,18 @@ const Content = ({ data }) => {
     );
 };
 
-export default Content;
+export default function SeriesComp({data}){
+    return(
+        <div >
+            <Head>
+                <title>Movies App - Series</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+            <GoToTop origin={"/series"}/>
+            <Content data={data}/>
+            <Provider store={store}>
+                <NavBar/>
+            </Provider>
+        </div>
+    )
+}

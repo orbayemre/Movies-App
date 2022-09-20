@@ -1,6 +1,13 @@
+import Head from "next/head"
+import {Provider} from "react-redux";
+import store from "../stores";
 import { useState } from "react";
+
+import NavBar from "./shared/navBar";
+import GoToTop from "./shared/goToTop";
+
 import InfiniteScroll from "react-infinite-scroll-component";
-import Results from "../../shared/results";
+import Results from "./shared/results";
 
 const Content = ({ data }) => {
     const [movies, setMovies] = useState(data);
@@ -34,10 +41,24 @@ const Content = ({ data }) => {
                 next={getData}
                 hasMore={hasMore}
             >
-                    <Results results={results} media={"movie"}></Results>
+                <Results results={results} media={"movie"}></Results>
             </InfiniteScroll>
         </>
     );
 };
 
-export default Content;
+export default function MoviesComp({data}){
+    return(
+        <div>
+            <Head>
+                <title>Movies App - Movies</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+            <GoToTop/>
+            <Provider store={store}>
+                <Content data={data}/>
+                <NavBar/>
+            </Provider>
+        </div>
+    )
+}

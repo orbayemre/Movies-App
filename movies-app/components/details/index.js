@@ -2,7 +2,7 @@ import Head from "next/head"
 import NavBar from "../shared/navBar";
 import {Provider} from "react-redux";
 import store from "../../stores";
-import DetailsHeader from "./header";
+import DetailsContent from "./content";
 import useDetailsFetch from "./useDetailsFetch";
 
 export default function DetailsComp({detailId,media}){
@@ -14,7 +14,7 @@ export default function DetailsComp({detailId,media}){
                 <title>Movies App - Details</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <DetailsHeader
+            <DetailsContent
                 result={data}
                 cast={cast}
                 review={review}

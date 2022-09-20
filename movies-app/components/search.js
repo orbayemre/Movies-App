@@ -1,10 +1,15 @@
-import {useEffect, useState} from "react";
+import {Provider, useDispatch, useSelector} from "react-redux";
+import {useRef,useEffect, useState} from "react";
+import store from "../stores";
+
+import Results from "./shared/results";
+import Head from "next/head"
+import NavBar from "./shared/navBar";
+import GoToTop from "./shared/goToTop";
+
 import InfiniteScroll from "react-infinite-scroll-component";
-import Results from "../shared/results";
-import {useDispatch,useSelector} from "react-redux";
-import {setQuery,setGenre} from "../../stores/searchFilter";
+import {setQuery,setGenre} from "../stores/searchFilter";
 import toast, { Toaster } from 'react-hot-toast';
-import {useRef} from "react";
 
 const Content = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -76,15 +81,15 @@ const Content = () => {
         }
     }
     const searchClick = ()=>{
-            setSearchResults([]);
-            setLoading(true);
-            getData();
-            if(query==="") toast.error("Please type a search value", {
-                style: {
-                    background: '#2C3639',
-                    color:'#FFC23C',
-                },
-            })
+        setSearchResults([]);
+        setLoading(true);
+        getData();
+        if(query==="") toast.error("Please type a search value", {
+            style: {
+                background: '#2C3639',
+                color:'#FFC23C',
+            },
+        })
     }
     const getMoreData = async ()=>{
         try{
@@ -180,9 +185,8 @@ const Content = () => {
                         src="https://assets1.lottiefiles.com/packages/lf20_j1adxtyb.json"
                         style={{ width: "200px", height: "200px" }}
                     ></lottie-player>
-                   <span className="text-3xl font-bold font-Signika">Loading...</span>
+                    <span className="text-3xl font-bold font-Signika">Loading...</span>
                 </div>
-
             </div>
             }
             <Toaster
@@ -194,4 +198,19 @@ const Content = () => {
     );
 };
 
-export default Content;
+
+export default function SearchComp(){
+    return(
+        <div>
+            <Head>
+                <title>Movies App - Search</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+            <GoToTop/>
+            <Provider store={store}>
+                <Content/>
+                <NavBar/>
+            </Provider>
+        </div>
+    )
+}

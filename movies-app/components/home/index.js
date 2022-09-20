@@ -1,10 +1,10 @@
-import Header from "./header";
 import Head from "next/head";
-import Content from "./content";
 import NavBar from "../shared/navBar";
 
 import {Provider} from "react-redux";
 import store from "../../stores";
+import Content from "./content";
+import Header from "./header";
 
 export default function HomeComp({headerMov}){
     const Ids= [];
