@@ -15,6 +15,13 @@ module.exports = {
         Teko: "'Teko', sans-serif",
         Righteous: "'Righteous', cursive;",
       },
+      fontSize:{
+         "xsm" :"11px",
+      },
+      screens:{
+        '1460' : "1460px",
+        '460' : "460px",
+      },
     },
   },
   plugins: [],
