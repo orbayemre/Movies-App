@@ -120,44 +120,53 @@ const Content = () => {
     }
     return (
         <div>
-            <div id="search" className="disableSelect bg-baseColor text-background mx-8 rounded-lg w-80 flex items-center relative top-14 left-20 mb-20 ">
-                <input type="text" onChange={searchChange} onKeyDown={keyDown13} value={query}
-                       className="outline-0 bg-baseColor px-2 w-72 py-1 font-Signika" />
-                <svg onClick={searchClick} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <div className="flex w-64 justify-around items-center disableSelect font-Signika font-bold text-baseColor absolute top-14 left-1/4 ml-20">
-                <div  onClick={()=>dispatch(setGenre("all"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
-                    {
-                        genre === "all" &&
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
-                        </svg>
-                    }
-                    <input type="radio" name="genre" id="all" className="hidden"/>
-                    <label htmlFor="all" className="cursor-pointer">All</label>
+            <div className="flex md:flex-row flex-col items-center justify-start md:space-x-32">
+                <div id="search" className="disableSelect bg-baseColor text-background mx-8 rounded-lg w-80 flex items-center relative top-14 md:left-20  mb-20 ">
+                    <input type="text" onChange={searchChange} onKeyDown={keyDown13} value={query}
+                           className="outline-0 bg-baseColor px-2 w-72 py-1 font-Signika" />
+                    <svg onClick={searchClick} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
-                <div  onClick={()=>dispatch(setGenre("movies"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
-                    {
-                        genre === "movies" &&
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
-                        </svg>
-                    }
-                    <input type="radio" name="genre" id="movies" className="hidden"/>
-                    <label htmlFor="movies">Movies</label>
+                <div className="flex w-64 justify-around items-center disableSelect font-Signika font-bold text-baseColor relative md:top-4">
+                    <div  onClick={()=>dispatch(setGenre("all"))} className={"border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 " +
+                        "hover:bg-baseColor hover:text-background duration-200 cursor-pointer "+
+                        (genre==="all" ? "bg-baseColor text-background ":"")}>
+                        {
+                            genre === "all" &&
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                            </svg>
+                        }
+                        <input type="radio" name="genre" id="all" className="hidden"/>
+                        <label htmlFor="all" className="cursor-pointer">All</label>
+                    </div>
+                    <div  onClick={()=>dispatch(setGenre("movies"))} className={"border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 " +
+                        "hover:bg-baseColor hover:text-background duration-200 cursor-pointer "+
+                        (genre==="movies" ? "bg-baseColor text-background ":"")}>
+                        {
+                            genre === "movies" &&
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                            </svg>
+                        }
+                        <input type="radio" name="genre" id="movies" className="hidden"/>
+                        <label htmlFor="movies">Movies</label>
+                    </div>
+                    <div  onClick={()=>dispatch(setGenre("series"))} className={"border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 " +
+                        "hover:bg-baseColor hover:text-background duration-200 cursor-pointer "+
+                        (genre==="series" ? "bg-baseColor text-background ":"") }>
+                        {
+                            genre === "series" &&
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
+                            </svg>
+                        }
+                        <input type="radio" name="genre" id="series" className="hidden"/>
+                        <label className="ml-2" htmlFor="series">Series</label>
+                    </div>
                 </div>
-                <div  onClick={()=>dispatch(setGenre("series"))} className="border border-baseColor rounded-xl flex justify-around items-center px-4 py-1 hover:bg-baseColor hover:text-background duration-200 cursor-pointer">
-                    {
-                        genre === "series" &&
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mr-2 w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5l6.785 6.785A48.1 48.1 0 0121 4.143" />
-                        </svg>
-                    }
-                    <input type="radio" name="genre" id="series" className="hidden"/>
-                    <label className="ml-2" htmlFor="series">Series</label>
-                </div>
+
             </div>
 
             {results.length !== 0  && !loading  &&

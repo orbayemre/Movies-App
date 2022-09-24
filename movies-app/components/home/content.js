@@ -1,5 +1,6 @@
 import {useState,useEffect} from "react";
 import Link from "next/link";
+import useWindowSize from "../shared/useWindowSize";
 
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Autoplay, Navigation} from "swiper";
@@ -7,29 +8,6 @@ import {Autoplay, Navigation} from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
-
-function useWindowSize() {
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            function handleResize() {
-                setWindowSize({
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                });
-            }
-            window.addEventListener("resize", handleResize);
-            handleResize();
-            return () => window.removeEventListener("resize", handleResize);
-        }
-    }, []);
-    return windowSize;
-}
-
 
 const Results = ({results,time,delay,media})=>{
 
@@ -68,8 +46,8 @@ const Results = ({results,time,delay,media})=>{
                             <SwiperSlide  className="h-80">
                                 <Link href={link}>
                                     <a >
-                                        <div key={result?.id} id="resultBox" className="card3d 1460:w-52 1460:h-80 md:w-48 md:h-72 460:w-36 460:h-52  w-28 h-40 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
-                                            <div id="title" className=" opacity-0 duration-200 flex flex-col rounded-lg -space-y-1 text-baseColor backdrop-blur-sm  font-Signika z-10 w-full pb-0 pl-3 rounded-b-lg  bottom-0 absolute  text-white">
+                                        <div key={result?.id} id="resultBox" className="1460:w-52 1460:h-80 md:w-48 md:h-72 460:w-36 460:h-52  w-28 h-40 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
+                                            <div id="title" className=" opacity-0 duration-200 flex flex-col rounded-b-lg -space-y-1 text-baseColor font-Signika z-20 w-full pb-0 pl-3 md:bg-black/60 bg-black/80  bottom-0 absolute  text-white">
                                                 <span className="font-bold md:text-sm text-xsm">{result?.title} {result?.name}</span>
                                                 <span className="md:text-sm text-xsm text-baseColor/70" >{date?.substring(0,4)}</span>
                                             </div>
@@ -82,7 +60,7 @@ const Results = ({results,time,delay,media})=>{
                                                     </span>
                                                 </span>
                                             <img src={posterLink} id="resultImg" className="w-full h-full rounded-lg absolute z-0"/>
-                                            <div id="middle" className="z-30 text-baseColor w-full h-rb px-2 -pt-5 pb-8 md:text-sm text-xsm overflow-auto font-Signika absolute">
+                                            <div id="middle" className="z-30 text-baseColor w-full md:h-3/4 h-rb h px-2 -pt-5 pb-20 md:text-sm text-xsm overflow-auto font-Signika absolute">
                                                     <span>
                                                         {result?.overview}
                                                     </span>

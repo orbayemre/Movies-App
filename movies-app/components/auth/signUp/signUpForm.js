@@ -54,28 +54,28 @@ export default function SignUpForm(){
         }
     }
     return(
-        <div className="w-1/3 h-auto rounded-lg shadowType4 z-10" >
+        <div className="xl:w-1/3 lg:w-2/5 sm:w-auto w-full  sm:ml-0 ml-6 h-auto rounded-lg sm:shadow sm:shadow-black z-10" >
             <div className="disableSelect flex flex-col space-y-3 my-5 items-center justify-center">
 
-                <div  onClick={handleSignInGoogle} className="w-1/2 flex space-x-4 items-center justify-center duration-200 cursor-pointer text-background bg-baseColor border border-baseColor rounded p-2
+                <div  onClick={handleSignInGoogle} className="xl:w-1/2 w-3/4 flex space-x-4 items-center justify-center duration-200 cursor-pointer text-background bg-baseColor border border-baseColor rounded p-2
                 hover:bg-transparent hover:text-baseColor">
                     <img className="w-6 h-6" src={"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png"}/>
-                    <span className="text-lg font-bold font-Signika">Sign Up with Google</span>
+                    <span className="sm:text-lg text-sm font-bold font-Signika">Sign Up with Google</span>
                 </div>
 
                 <div className="w-full flex space-x-4 items-center justify-start ml-32">
-                    <hr className="w-1/3 bg-baseColor border-none h-0.5"/>
+                    <hr className="sm:w-1/3 w-1/4 bg-baseColor border-none h-0.5"/>
                     <span className="text-baseColor font-Signika text-sm font-bold">OR</span>
-                    <hr className="w-1/3 bg-baseColor border-none h-0.5"/>
+                    <hr className="sm:w-1/3 w-1/4 bg-baseColor border-none h-0.5"/>
                 </div>
 
                 <div className="flex flex-col space-y-6  items-center justify-center">
                     <div className="w-full flex flex-col items-center justify-center">
-                        <div className="flex w-full justify-start ml-20 space-x-16 items-center text-sm text-background  font-bold">
-                            <input onKeyDown={keyDown13} value={firstName} onChange={(e)=>setFirstName(e.target.value)} type="text" className="outline-none bg-gray-300 rounded w-40 py-1 pl-2 font-Signika duration-200 shadowType1
+                        <div className="flex w-full justify-start ml-20 sm:space-x-16 space-x-5 items-center text-sm text-background  font-bold">
+                            <input onKeyDown={keyDown13} value={firstName} onChange={(e)=>setFirstName(e.target.value)} type="text" className="outline-none bg-gray-300 rounded sm:w-40 w-28 py-1 pl-2 font-Signika duration-200 shadowType1
                         focus:outline-offset-1 focus:outline-baseColor placeholder:text-background/70 text-sm "
                                    placeholder="First Name"/>
-                            <input onKeyDown={keyDown13} value={lastName} onChange={(e)=>setLastName(e.target.value)} type="text" className="outline-none bg-gray-300 rounded w-40 py-1 pl-2 font-Signika duration-200 shadowType1
+                            <input onKeyDown={keyDown13} value={lastName} onChange={(e)=>setLastName(e.target.value)} type="text" className="outline-none bg-gray-300 rounded sm:w-40 w-28 py-1 pl-2 font-Signika duration-200 shadowType1
                         focus:outline-offset-1 focus:outline-baseColor placeholder:text-background/70 text-sm "
                                    placeholder="Last Name"/>
                         </div>

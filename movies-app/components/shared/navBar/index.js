@@ -18,11 +18,14 @@ export default function NavBar(){
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function() {
                 var currentScrollPos = window.pageYOffset;
+                var goToTop = document.getElementById("gototop");
                 if(navbar.current){
                     if (prevScrollpos > currentScrollPos) {
                         navbar.current.style.top = "0";
+                        goToTop ? goToTop.style.bottom="10px" :"";
                     } else {
                         navbar.current.style.top = "-50px";
+                        goToTop ? goToTop.style.bottom="-50px" :"";
                     }
 
                 }
