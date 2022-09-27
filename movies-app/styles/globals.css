@@ -74,6 +74,25 @@ body::-webkit-scrollbar-thumb {
     background-color: #FFC23C;
     border-radius: 30px;
 }
+#reviewScroll {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 #ffffff;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 2px;
+    padding-left: 2px;
+    transition-duration: 0.2s;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: #2C3639;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background-color: #FFC23C;
+    border-radius: 30px;
+}
 .infinite-scroll-component{
     overflow-x: hidden !important;
 }
@@ -87,9 +106,6 @@ body::-webkit-scrollbar-thumb {
 }
 .h-review{
     height: 560px;
-}
-.w-sb{
-    width: 95%;
 }
 .w-twentyfive{
     width: 25%;
@@ -111,6 +127,58 @@ body::-webkit-scrollbar-thumb {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
+.yt_player_iframe{
+    width: 500px;
+    height: 300px;
+}
+
+@media (max-width: 1500px){
+    .yt_player_iframe{
+        width: 320px;
+        height: 200px;
+    }
+
+}
+
+@media (max-width: 1280px){
+
+    .yt_player_iframe{
+        margin-top:50px;
+        padding: 0px 50px;
+        width:100%;
+        height: 500px;
+    }
+}
+@media (max-width: 800px){
+
+    .yt_player_iframe{
+
+        margin-top:30px;
+        height: 400px;
+    }
+}
+@media (max-width: 700px){
+
+    .yt_player_iframe{
+        margin-top:20px;
+        height: 320px;
+    }
+}
+@media (max-width: 600px){
+
+    .yt_player_iframe{
+        margin-top:10px;
+        height: 280px;
+    }
+}
+
+
+@media (max-width: 400px){
+
+    .yt_player_iframe{
+        height: 180px;
+    }
+}
 @media (max-width: 1280px) {
     .poster{
         width: 216px;
@@ -118,6 +186,7 @@ body::-webkit-scrollbar-thumb {
         border-radius: 10px;
         box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     }
+
 
 }
 @media (max-width: 768px) {

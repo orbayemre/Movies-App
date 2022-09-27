@@ -17,9 +17,16 @@ module.exports = {
       },
       fontSize:{
          "xsm" :"11px",
+         "2xsm" : "9px",
+      },
+      width : {
+        "sb" : "95%",
+        "seventy" : "70%",
+        "thirty" : "30%",
       },
       screens:{
         '1460' : "1460px",
+        '900' :"900px",
         '460' : "460px",
       },
     },

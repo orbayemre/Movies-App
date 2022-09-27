@@ -2,18 +2,17 @@ import {useState,useEffect} from "react";
 import Link from "next/link";
 import useWindowSize from "../shared/useWindowSize";
 
-import {Swiper, SwiperSlide} from "swiper/react";
+import {Swiper, SwiperSlide,useSwiper } from "swiper/react";
 import {Autoplay, Navigation} from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 
-const Results = ({results,time,delay,media})=>{
+const Results = ({results,delay,media})=>{
 
-
+    const swiper = useSwiper();
     const size = useWindowSize();
-    console.log(size.width);
     var slidesPerViewNum=6;
     if (size.width >=1536)  slidesPerViewNum = 7
     else if (size.width <=1536 && size.width >=1280)  slidesPerViewNum = 6
@@ -25,16 +24,23 @@ const Results = ({results,time,delay,media})=>{
         <Swiper
             slidesPerView={slidesPerViewNum}
             spaceBetween={20}
-            speed={time}
+            speed={1000}
             autoplay={{
                 delay: delay,
-                disableOnInteraction: true,
+                disableOnInteraction: false,
                 pauseOnMouseEnter:false,
             }}
             loop={true}
+            navigation={{ nextEl: ".next", prevEl: ".prev" }}
             modules={[Navigation,Autoplay]}
-            className="mySwiper w-full h-full top-50"
+            className="mySwiper w-full h-full top-50 relative"
         >
+
+            <div className="prev absolute top-0 left-0 h-full w-8 bg-background/50 hover:bg-background/80 duration-200 cursor-pointer text-baseColor flex items-center justify-center z-50 ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+                </svg>
+            </div>
             {
                 results?.map(result => {
 
@@ -73,6 +79,11 @@ const Results = ({results,time,delay,media})=>{
                     }
                 )
             }
+            <div className="next absolute top-0 right-0 h-full bg-background/50 hover:bg-background/80 duration-200 cursor-pointer text-baseColor flex items-center justify-center z-50 ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+            </div>
         </Swiper>
     )
 }
@@ -147,23 +158,23 @@ export default function Content(){
         <div id="content" className="py-4 flex flex-col space-y-10 mt-10 pb-10">
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Upcoming Movies</h1>
-                <Results results ={upcomingMoviesResults} time={1700} delay={1000} media={"movie"} />
+                <Results results ={upcomingMoviesResults} delay={1000} media={"movie"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Movies</h1>
-                <Results results ={popularMoviesResults} time={2000} delay={1500} media={"movie"}/>
+                <Results results ={popularMoviesResults} delay={1500} media={"movie"}/>
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Series</h1>
-                <Results results ={popularTvResults} time={2000} delay={2000} media={"tv"} />
+                <Results results ={popularTvResults} delay={2000} media={"tv"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Top Rated Movies</h1>
-                <Results results ={topRatedMoviesResults} time={3000}  delay={3000} media={"movie"} />
+                <Results results ={topRatedMoviesResults} delay={3000} media={"movie"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Top Rated Series</h1>
-                <Results results ={topRatedTvResults} time={4000}  delay={4000} media={"tv"} />
+                <Results results ={topRatedTvResults} delay={4000} media={"tv"} />
             </div>
 
         </div>

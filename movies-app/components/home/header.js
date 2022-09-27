@@ -77,7 +77,7 @@ const Carousel = ({headerMov,ids}) => {
                                     <div className="absolute w-full h-full z-10 backdrop-brightness-75" key={movie?.id}></div>
                                     <img className="absolute w-full h-full object-cover " src={backgroundImg}></img>
                                     <div className="z-20 absolute top-40 ml-10 xl:left-56 lg:left-32 md:left-24 backdrop-brightness-75 rounded p-4 md:w-2/5 w-4/5 ">
-                                        <h1 className="px-5 pt-5 pb-1 text-white text-xl xl:text-5xl md:text-4xl sm:text-2xl font-Righteous w-full">
+                                        <h1 className="px-5 pt-5 pb-1 text-baseColor text-xl xl:text-5xl md:text-4xl sm:text-2xl font-Righteous w-full">
                                             <Link href={link}>
                                                 <a>{movie?.title} {movie?.name}</a>
                                             </Link>
