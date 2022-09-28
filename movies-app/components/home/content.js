@@ -2,7 +2,7 @@ import {useState,useEffect} from "react";
 import Link from "next/link";
 import useWindowSize from "../shared/useWindowSize";
 
-import {Swiper, SwiperSlide,useSwiper } from "swiper/react";
+import {Swiper, SwiperSlide } from "swiper/react";
 import {Autoplay, Navigation} from "swiper";
 
 import "swiper/css";
@@ -10,8 +10,6 @@ import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 
 const Results = ({results,delay,media})=>{
-
-    const swiper = useSwiper();
     const size = useWindowSize();
     var slidesPerViewNum=6;
     if (size.width >=1536)  slidesPerViewNum = 7
@@ -24,7 +22,7 @@ const Results = ({results,delay,media})=>{
         <Swiper
             slidesPerView={slidesPerViewNum}
             spaceBetween={20}
-            speed={1000}
+            speed={500}
             autoplay={{
                 delay: delay,
                 disableOnInteraction: false,

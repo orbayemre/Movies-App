@@ -168,17 +168,11 @@ body::-webkit-scrollbar-thumb {
 
     .yt_player_iframe{
         margin-top:10px;
-        height: 280px;
+        height: 190px;
     }
 }
 
 
-@media (max-width: 400px){
-
-    .yt_player_iframe{
-        height: 180px;
-    }
-}
 @media (max-width: 1280px) {
     .poster{
         width: 216px;

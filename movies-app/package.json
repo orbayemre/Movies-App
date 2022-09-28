@@ -13,6 +13,7 @@
     "@lottiefiles/lottie-player": "^1.5.7",
     "@reduxjs/toolkit": "^1.8.4",
     "firebase": "^9.9.3",
+    "hamburger-react": "^2.5.0",
     "jquery": "^3.6.0",
     "next": "12.2.4",
     "next-redux-wrapper": "^7.0.5",
