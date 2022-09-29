@@ -1,4 +1,4 @@
-import SignInComp from "../components/auth/signIn";
+import SignInComp from "../components/auth/signin";
 import {Provider} from "react-redux";
 import stores from "../stores";
 

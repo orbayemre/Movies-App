@@ -1,15 +1,16 @@
-import Link from 'next/link';
-import { useRouter } from "next/router";
 import {useEffect,useState,useRef} from "react";
+import { useRouter } from "next/router";
+import Link from 'next/link';
+import { Squash as Hamburger } from 'hamburger-react';
+import $ from 'jquery';
+
 import {setQuery} from "../../../stores/searchFilter";
 import {logIn} from "../../../stores/auth";
 import {useDispatch} from "react-redux";
+import {currentUser} from "../../../firebase";
+import useWindowSize from "../useWindowSize";
 import LottieAnimation from "../lottieAnimation";
 import NavBarAuth from "./auth";
-import {currentUser} from "../../../firebase";
-import { Squash as Hamburger } from 'hamburger-react';
-import $ from 'jquery';
-import useWindowSize from "../useWindowSize";
 
 export default function NavBar(){
     const router = useRouter();
@@ -17,8 +18,6 @@ export default function NavBar(){
     const dispatch = useDispatch();
     const [isOpen, setOpen] = useState(false);
     const size = useWindowSize();
-
-
 
     useEffect(()=>{
         if(typeof window !== "undefined"){

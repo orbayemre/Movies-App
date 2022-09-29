@@ -10,6 +10,7 @@ import GoToTop from "./shared/goToTop";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {setQuery,setGenre} from "../stores/searchFilter";
 import toast, { Toaster } from 'react-hot-toast';
+import Footer from "./shared/footer";
 
 const Content = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -37,7 +38,6 @@ const Content = () => {
         setPage(1)
         getData()
     },[query,genre])
-
     useEffect(() => {
         import("@lottiefiles/lottie-player");
     });
@@ -104,7 +104,6 @@ const Content = () => {
             const dataSearch = await responseSearch.json();
             let search = dataSearch.results;
 
-
             if(dataSearch.total_pages <= page) {setHasMore(false);}
             else setHasMore(true);
             if(search) setSearchResults((prev) => [...prev, ...search]);
@@ -113,10 +112,6 @@ const Content = () => {
         catch (e){
             console.log(e);
         }
-    }
-    const results = []
-    for(var key in searchResults){
-        results.push(searchResults[key]);
     }
     return (
         <div>
@@ -169,16 +164,16 @@ const Content = () => {
 
             </div>
 
-            {results.length !== 0  && !loading  &&
+            {searchResults?.length !== 0  && !loading  &&
                 <InfiniteScroll
-                    dataLength={results.length}
+                    dataLength={searchResults?.length}
                     next={getMoreData}
                     hasMore={hasMore}
                 >
-                    <Results results={results}></Results>
+                    <Results results={searchResults}></Results>
                 </InfiniteScroll>
             }
-            {results.length === 0 && !loading &&
+            {searchResults?.length === 0 && !loading &&
                 <div className="text-baseColor absolute top-18 left-28 text-2xl font-bold font-Signika">
                     No results found.
                 </div>
@@ -210,16 +205,19 @@ const Content = () => {
 
 export default function SearchComp(){
     return(
-        <div>
-            <Head>
-                <title>Movies App - Search</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            </Head>
-            <GoToTop/>
-            <Provider store={store}>
-                <Content/>
-                <NavBar/>
-            </Provider>
-        </div>
+        <>
+            <div className="mb-20">
+                <Head>
+                    <title>Movies App - Search</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                </Head>
+                <GoToTop/>
+                <Provider store={store}>
+                    <Content/>
+                    <NavBar/>
+                </Provider>
+            </div>
+            <Footer/>
+        </>
     )
 }

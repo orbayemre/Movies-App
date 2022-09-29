@@ -29,19 +29,15 @@ const Content = ({ data }) => {
         setMovies((prev) => [...prev, ...popMovie,...ratedMovie]);
     };
 
-    const results = []
-    for(var key in movies){
-        results.push(movies[key]);
-    }
 
     return (
         <>
             <InfiniteScroll
-                dataLength={results.length}
+                dataLength={movies?.length}
                 next={getData}
                 hasMore={hasMore}
             >
-                <Results results={results} media={"movie"}></Results>
+                <Results results={movies} media={"movie"}></Results>
             </InfiniteScroll>
         </>
     );

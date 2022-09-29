@@ -31,19 +31,14 @@ const Content = ({ data }) => {
         setSeries((prev) => [...prev, ...popTv,...ratedTv]);
     };
 
-    const results = []
-    for(var key in series){
-        results.push(series[key]);
-    }
-
     return (
         <>
             <InfiniteScroll
-                dataLength={results.length}
+                dataLength={series?.length}
                 next={getData}
                 hasMore={hasMore}
             >
-                <Results results={results} media={"tv"}></Results>
+                <Results results={series} media={"tv"}></Results>
             </InfiniteScroll>
         </>
     );

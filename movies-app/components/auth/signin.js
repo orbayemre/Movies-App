@@ -1,12 +1,19 @@
-import {signIn, signInWithGoogle, signOut} from "../../../firebase";
+import {useSelector} from "react-redux";
 import {useRouter} from "next/router";
-import Link from "next/link";
-import toast from "react-hot-toast";
 import {useState} from "react";
+import Head from "next/head";
+import Link from "next/link";
+import toast, {Toaster} from "react-hot-toast";
 
-export default function SignInForm(){
+import LottieAnimation from "../shared/lottieAnimation";
+import NavBar from "../shared/navBar";
+import {signIn, signInWithGoogle} from "../../firebase";
+import useWindowSize from "../shared/useWindowSize";
+import Footer from "../shared/footer";
+
+const SignInForm = () => {
+
     const router = useRouter();
-
     const [email,setEmail] = useState(null);
     const [password,setPassword] = useState(null);
     const [rememberMe,setRememberMe] = useState("");
@@ -93,4 +100,50 @@ export default function SignInForm(){
             </div>
         </div>
     )
+}
+
+export default function SignInComp(){
+
+    const router = useRouter();
+    const size = useWindowSize();
+    const {user} = useSelector(state => state.auth);
+    if(user){
+        router.push("/");
+    }else{
+
+        return(
+            <>
+
+                <Head>
+                    <title>Movies App - Sign In</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                </Head>
+                <div className="flex w-full h-screen mt-10 justify-start items-center flex-col">
+                    <LottieAnimation link={"https://assets5.lottiefiles.com/private_files/lf30_ul3enyal.json"}
+                                     width={"200px"} height={"200px"}/>
+                    <SignInForm/>
+                    { size.width>1000 &&
+                        <div className="flex absolute w-full h-full items-center justify-start ml-40 ">
+                            <LottieAnimation link={"https://assets4.lottiefiles.com/private_files/lf30_bb9bkg1h.json"}
+                                             width={"300px"} height={"300px"}/>
+                        </div>
+
+                    }
+                    { size.width>1000 &&
+                        <div className="flex absolute w-full h-full items-center justify-end mr-40 ">
+                            <LottieAnimation link={"https://assets5.lottiefiles.com/packages/lf20_qm8eqzse.json"}
+                                             width={"300px"} height={"300px"}/>
+                        </div>
+
+                    }
+                    <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                    />
+                    <NavBar />
+                </div>
+                <Footer/>
+            </>
+        )
+    }
 }

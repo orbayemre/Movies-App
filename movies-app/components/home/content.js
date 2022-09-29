@@ -137,42 +137,27 @@ export default function Content(){
         }
     };
 
-
-    const popularMoviesResults = [];
-    const popularTvResults = [];
-    const topRatedMoviesResults = [];
-    const topRatedTvResults = [];
-    const upcomingMoviesResults = [];
-    for(var i=0;i<15;i++){
-        popularMoviesResults.push(popularMoviesData[i]);
-        popularTvResults.push(popularTvData[i]);
-        topRatedMoviesResults.push(topRatedMoviesData[i]);
-        topRatedTvResults.push(topRatedTvData[i]);
-        upcomingMoviesResults.push(upcomingMoviesData[i]);
-
-    }
-
     return(
         <div id="content" className="py-4 flex flex-col space-y-10 mt-10 pb-10">
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Upcoming Movies</h1>
-                <Results results ={upcomingMoviesResults} delay={1000} media={"movie"} />
+                <Results results ={upcomingMoviesData} delay={1000} media={"movie"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Movies</h1>
-                <Results results ={popularMoviesResults} delay={1500} media={"movie"}/>
+                <Results results ={popularMoviesData} delay={1500} media={"movie"}/>
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Popular Series</h1>
-                <Results results ={popularTvResults} delay={2000} media={"tv"} />
+                <Results results ={popularTvData} delay={2000} media={"tv"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Top Rated Movies</h1>
-                <Results results ={topRatedMoviesResults} delay={3000} media={"movie"} />
+                <Results results ={topRatedMoviesData} delay={3000} media={"movie"} />
             </div>
             <div className="w-sb mx-8">
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Top Rated Series</h1>
-                <Results results ={topRatedTvResults} delay={4000} media={"tv"} />
+                <Results results ={topRatedTvData} delay={4000} media={"tv"} />
             </div>
 
         </div>

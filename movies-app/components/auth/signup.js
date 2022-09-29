@@ -1,10 +1,17 @@
-import {useRef, useState} from "react";
-import {signInWithGoogle, signUp, updProfile} from "../../../firebase";
-import toast from 'react-hot-toast';
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {useRef, useState} from "react";
+import Head from "next/head";
+import toast, {Toaster} from "react-hot-toast";
 import Link from "next/link";
 
-export default function SignUpForm(){
+import useWindowSize from "../shared/useWindowSize";
+import Footer from "../shared/footer";
+import LottieAnimation from "../shared/lottieAnimation";
+import NavBar from "../shared/navBar";
+import {signInWithGoogle, signUp, updProfile} from "../../firebase";
+
+const SignUpForm = () => {
 
     const router = useRouter();
     const [firstName,setFirstName] = useState(null);
@@ -42,10 +49,10 @@ export default function SignUpForm(){
 
     }
     const handleSignInGoogle = async ()=>{
-            await signInWithGoogle().then(errorMessage =>{
-                if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
-                else router.push("/");
-            })
+        await signInWithGoogle().then(errorMessage =>{
+            if(errorMessage) toast.error(errorMessage, {style: {background: '#2C3639',color:'#FFC23C',zIndex:99},});
+            else router.push("/");
+        })
     }
 
     const keyDown13 = (e) =>{
@@ -94,7 +101,7 @@ export default function SignUpForm(){
                         <div className="flex flex-col w-full ml-10 space-y-3 text-sm text-background  font-bold">
                             <input  type="password" onKeyDown={keyDown13} value={password} onChange={(e)=>setPassword(e.target.value)} className="outline-none bg-gray-300 rounded w-40 py-1 pl-2 font-Signika duration-200 shadowType1
                         focus:outline-offset-1 focus:outline-baseColor placeholder:text-background/70 text-sm "
-                                   placeholder="Password"/>
+                                    placeholder="Password"/>
                             <input type="password" onKeyDown={keyDown13} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} className="outline-none bg-gray-300 rounded w-40 py-1 pl-2 font-Signika duration-200 shadowType1
                         focus:outline-offset-1 focus:outline-baseColor placeholder:text-background/70 text-sm "
                                    placeholder="Confirm Password"/>
@@ -118,11 +125,57 @@ export default function SignUpForm(){
                     Do you already have an account?
                     <Link href={"/signin"}>
                         <a className="font-bold text-baseColor pl-1 underline underline-offset-2">
-                              Sign In
+                            Sign In
                         </a>
                     </Link>
                 </div>
             </div>
         </div>
     )
+}
+
+export default function SignUpComp(){
+
+    const router = useRouter();
+    const size = useWindowSize();
+    const {user} = useSelector(state => state.auth);
+    if(user){
+        router.push("/",);
+    }else{
+        return(
+            <>
+
+                <Head>
+                    <title>Movies App - Sign Up</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                </Head>
+                <div className="flex w-full h-screen mt-10 justify-start items-center flex-col">
+                    <LottieAnimation link={"https://assets5.lottiefiles.com/private_files/lf30_ul3enyal.json"}
+                                         width={"200px"} height={"200px"}/>
+                    <SignUpForm/>
+                    { size.width>1000 &&
+                        <div className="flex absolute w-full h-full items-center justify-start ml-40 ">
+                            <LottieAnimation link={"https://assets4.lottiefiles.com/private_files/lf30_bb9bkg1h.json"}
+                                         width={"300px"} height={"300px"}/>
+                        </div>
+
+                    }
+                    { size.width>1000 &&
+                        <div className="flex absolute w-full h-full items-center justify-end mr-40 ">
+                            <LottieAnimation link={"https://assets5.lottiefiles.com/packages/lf20_qm8eqzse.json"}
+                                             width={"300px"} height={"300px"}/>
+                        </div>
+
+                    }
+                    <NavBar />
+                    <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                        toastOptions={{duration: 5000,}}
+                    />
+                </div>
+                <Footer/>
+            </>
+        )
+    }
 }

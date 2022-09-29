@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import store from "../../stores";
 import Content from "./content";
 import Header from "./header";
+import Footer from "../shared/footer";
 
 export default function HomeComp({headerMov}){
     const Ids= [];
@@ -26,6 +27,7 @@ export default function HomeComp({headerMov}){
             <Provider store={store}>
                 <NavBar/>
             </Provider>
+            <Footer/>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import NavBar from "../../shared/navBar";
+import NavBar from "../shared/navBar";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import Link from "next/link";
@@ -13,8 +13,9 @@ import {
     updEmail,
     updPassword,
     updProfile
-} from "../../../firebase";
+} from "../../firebase";
 import toast,{Toaster} from "react-hot-toast";
+import Footer from "../shared/footer";
 
 const NavigationList = () => {
     const router = useRouter();
@@ -479,6 +480,7 @@ export default function AccountComp(){
             </div>
             <NavBar/>
             <Toaster/>
+            <Footer/>
         </>
     )
 }
