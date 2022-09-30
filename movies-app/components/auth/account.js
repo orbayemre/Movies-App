@@ -88,7 +88,7 @@ const ProfTab = ()=>{
 
     const [isOpen, setIsOpen] = useState(false);
     const [newImg, setNewImg] = useState(null);
-    const [newName, setNewName] = useState(user?.displayName);
+    const [newName, setNewName] = useState("");
 
     const handleSetNewImg = (e) =>{
         setNewImg(e.target.src);
@@ -98,7 +98,8 @@ const ProfTab = ()=>{
         setNewName(e.target.value);
     }
     const handleSetProfile = async () =>{
-        await updProfile(newName,newImg);
+        if(!newName) await updProfile(user?.displayName,newImg);
+        else await updProfile(newName,newImg);
     }
     return(
         <>
@@ -199,7 +200,7 @@ const BookmarksTab = ()=>{
     getBookmarks().then(({bookmarks})=> {setBookmarks(bookmarks);});
     return(
         <div className="w-full flex flex-wrap justify-start items-center sm:mt-0 mt-5 sm:px-4">
-            {bookmarks?.map(bookmark=>{
+            {bookmarks?.map((bookmark,index)=>{
                 function map(val, minA, maxA, minB, maxB) {
                     return minB + ((val - minA) * (maxB - minB)) / (maxA - minA);
                 }
@@ -231,7 +232,7 @@ const BookmarksTab = ()=>{
                 });
                 const link = bookmark.media === "movie" ? "/movies/details?id="+bookmark.id :"/series/details?id="+bookmark.id;
                 return (
-                    <div className="card3d lg:w-36 w-24 rounded-xl md:my-4 my-2 md:mx-4 mx-2 cursor-pointer">
+                    <div key={index} className="card3d lg:w-36 w-24 rounded-xl md:my-4 my-2 md:mx-4 mx-2 cursor-pointer">
                         <Link href={link}>
                             <a>
                                 <img className="w-full h-full z-0 object-cover rounded-xl duration-200" src={"https://image.tmdb.org/t/p/original"+ bookmark.poster}/>

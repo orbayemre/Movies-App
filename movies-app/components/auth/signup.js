@@ -14,11 +14,12 @@ import {signInWithGoogle, signUp, updProfile} from "../../firebase";
 const SignUpForm = () => {
 
     const router = useRouter();
-    const [firstName,setFirstName] = useState(null);
-    const [lastName,setLastName] = useState(null);
-    const [email,setEmail] = useState(null);
-    const [password,setPassword] = useState(null);
-    const [confirmPassword,setConfirmPassword] = useState(null);
+    const [firstName,setFirstName] = useState("");
+    const [lastName,setLastName] = useState("");
+    const [email,setEmail] = useState("");
+    const [emailIsChanged,setEmailIschanged] = useState(false);
+    const [password,setPassword] = useState("");
+    const [confirmPassword,setConfirmPassword] = useState("");
     const [rememberMe,setRememberMe] = useState("");
 
     const emailErrRef = useRef();
@@ -54,7 +55,10 @@ const SignUpForm = () => {
             else router.push("/");
         })
     }
-
+    const handleEmail = (e)=>{
+        setEmail(e.target.value);
+        if(!emailIsChanged) setEmailIschanged(true);
+    }
     const keyDown13 = (e) =>{
         if(e.keyCode === 13){
             handleSubmit();
@@ -89,12 +93,12 @@ const SignUpForm = () => {
                     </div>
                     <div className="w-full flex flex-col items-start justify-center relative">
                         <div className="flex w-full justify-start ml-10 space-x-16 items-center text-sm text-background  font-bold">
-                            <input type="text" onKeyDown={keyDown13} value={email} onChange={(e)=>setEmail(e.target.value)} className="outline-none bg-gray-300 rounded w-1/2 py-1 pl-2 font-Signika duration-200 shadowType1
+                            <input type="text" onKeyDown={keyDown13} value={email} onChange={handleEmail} className="outline-none bg-gray-300 rounded w-1/2 py-1 pl-2 font-Signika duration-200 shadowType1
                         focus:outline-offset-1 focus:outline-baseColor placeholder:text-background/70 text-sm "
                                    placeholder="E-mail"/>
                         </div>
                         <span ref={emailErrRef} className="text-sm font-Signika font-bold ml-12 text-red-700">
-                            {email==="" && "E-mail is required."}
+                            {(emailIsChanged && email==="") && "E-mail is required."}
                         </span>
                     </div>
                     <div className="w-full flex flex-col items-start justify-center">

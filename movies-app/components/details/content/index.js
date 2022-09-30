@@ -1,5 +1,5 @@
 import Review from "./review";
-import ResultBox from "../../shared/results/resultBox";
+import {ResultBox} from "../../shared/results";
 import {useEffect, useRef, useState} from "react";
 import {addBookmark, deleteBookmark, getBookmarks} from "../../../firebase";
 
@@ -174,8 +174,8 @@ const  Cast =({castData}) =>{
                         const imgUrl  = item?.profile_path ? "https://image.tmdb.org/t/p/original"+ item?.profile_path : null;
                         if(imgUrl){
                             return(
-                                <SwiperSlide className="w-auto h-auto disableSelect ">
-                                    <div key={index} className="2xl:w-56 xl:w-48 lg:w-60 h-auto mx-1 opacity-100 my-3 cursor-context-menu rounded-lg relative shadowType2 cursor-pointer">
+                                <SwiperSlide key={index} className="w-auto h-auto disableSelect ">
+                                    <div  className="2xl:w-56 xl:w-48 lg:w-60 h-auto mx-1 opacity-100 my-3 cursor-context-menu rounded-lg relative shadowType2 cursor-pointer">
                                         <img src={imgUrl} className="w-full h-full rounded-lg"/>
                                         <div className="w-full space-y-0 rounded-b-lg absolute flex flex-col bottom-0 z-10 bg-black/60 md:pb-1 pb-0.5 pl-2 font-Signika ">
                                             <span className="md:text-sm text-2xsm font-bold text-baseColor leading-3 md:my-1">{item?.name}</span>
@@ -220,7 +220,12 @@ const Similar = ({similarData,media})=>{
         <div className="2xl:w-3/4  w-full xl:ml-20 ml-8 flex flex-col flex items-start justify-center similarBtm">
             <h1 className="disableSelect text-3xl text-baseColor pl-6 font-bold font-Signika">Similar {media === "movie"? "Movies":"Series" }</h1>
             <div className="900:grid  900:grid-cols-4 900:grid-rows-2 flex flex-wrap">
-                {results?.map((item)=> <ResultBox result={item} media={media} />)}
+                {results.map((item,index)=>(
+                    <div key={index}>
+                        <ResultBox result={item} media={media}/>
+                    </div>
+
+                ))}
             </div>
 
         </div>

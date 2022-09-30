@@ -14,8 +14,8 @@ import Footer from "../shared/footer";
 const SignInForm = () => {
 
     const router = useRouter();
-    const [email,setEmail] = useState(null);
-    const [password,setPassword] = useState(null);
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
     const [rememberMe,setRememberMe] = useState("");
 
     const validateEmail = (email) => {

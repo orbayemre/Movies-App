@@ -47,10 +47,10 @@ const Results = ({results,delay,media})=>{
                         var date;
                         date = result?.first_air_date || result?.release_date;
                         return (
-                            <SwiperSlide  className="h-80">
+                            <SwiperSlide key={result?.id} className="h-80">
                                 <Link href={link}>
                                     <a >
-                                        <div key={result?.id} id="resultBox" className="1460:w-52 1460:h-80 md:w-48 md:h-72 460:w-36 460:h-52  w-28 h-40 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
+                                        <div  id="resultBox" className="1460:w-52 1460:h-80 md:w-48 md:h-72 460:w-36 460:h-52  w-28 h-40 mx-5 my-3 rounded-lg shadowType2 relative cursor-pointer relative ">
                                             <div id="title" className=" opacity-0 duration-200 flex flex-col rounded-b-lg -space-y-1 text-baseColor font-Signika z-20 w-full pb-0 pl-3 md:bg-black/60 bg-black/80  bottom-0 absolute  text-white">
                                                 <span className="font-bold md:text-sm text-xsm">{result?.title} {result?.name}</span>
                                                 <span className="md:text-sm text-xsm text-baseColor/70" >{date?.substring(0,4)}</span>
@@ -159,7 +159,6 @@ export default function Content(){
                 <h1 className="font-Signika text-3xl text-baseColor font-bold mb-0">Top Rated Series</h1>
                 <Results results ={topRatedTvData} delay={4000} media={"tv"} />
             </div>
-
         </div>
     )
 
