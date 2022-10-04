@@ -4,9 +4,10 @@ import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,sign
     setPersistence,browserLocalPersistence,browserSessionPersistence,
     signInWithPopup, GoogleAuthProvider,
     updateProfile,updateEmail,updatePassword,deleteUser} from "firebase/auth";
-
 import { getFirestore,doc, setDoc ,getDoc,updateDoc,deleteDoc} from "firebase/firestore";
 
+import store from "./stores";
+import {logIn as handleLogIn,logOut as handleLogOut} from "./stores/auth";
 
 
 const errors ={
@@ -19,9 +20,6 @@ const errors ={
     "auth/wrong-password" : "Wrong password.Please make sure you enter your password correctly.",
     "auth/user-not-found" : "Wrong password or E-mail address. Please make sure you enter your email address and password correctly.",
 }
-
-import store from "./stores";
-import {logIn as handleLogIn,logOut as handleLogOut} from "./stores/auth";
 
 
 const firebaseConfig = {
